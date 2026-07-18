@@ -1,0 +1,69 @@
+project_id = "opusftqbbaozucmbuuug"
+
+[functions.fetch-promotions]
+verify_jwt = false
+
+[functions.process-club-subscriptions]
+verify_jwt = false
+
+[functions.fetch-market-prices]
+verify_jwt = false
+
+[functions.get-exchange-rate]
+verify_jwt = false
+
+[functions.cleanup-old-promotions]
+verify_jwt = false
+
+[functions.send-client-email]
+verify_jwt = false
+
+[functions.google-calendar-auth]
+verify_jwt = false
+
+[functions.sync-calendar-events]
+verify_jwt = false
+
+[functions.program-accounts]
+verify_jwt = false
+
+[functions.health-check]
+verify_jwt = false
+
+[functions.backup-database]
+verify_jwt = true
+
+# Plan 02-02 W1a — LGPD compliance edge functions (COMPL-01 / COMPL-02)
+[functions.lgpd-export]
+verify_jwt = true
+
+[functions.lgpd-delete]
+# Both actions (request + confirm) require JWT as first factor; confirm adds
+# the HMAC-signed token from the email as a second out-of-band factor.
+verify_jwt = true
+
+[functions.lgpd-delete-cleanup]
+# Invoked by pg_cron via net.http_post — no user JWT context. Auth via the
+# LGPD_CLEANUP_AUTH_TOKEN secret compared constant-time in the handler.
+verify_jwt = false
+
+# Plan 02-05 W2a — Asaas integration scaffold (sandbox)
+[functions.asaas-webhook]
+# Called by Asaas (no Supabase JWT context). Auth via the static
+# `asaas-access-token` header compared constant-time against
+# ASAAS_WEBHOOK_TOKEN secret. CRIT-04 idempotency via INSERT-first
+# into webhook_events with (provider, event_id) UNIQUE.
+verify_jwt = false
+
+[functions.create-checkout-session]
+# Called from the browser with the user's Supabase JWT. We manually read
+# the Authorization header inside the handler (via supabase.auth.getUser)
+# so we can map user.id -> profiles.asaas_customer_id and short-circuit
+# 401 with a JSON error body shape. verify_jwt=false avoids Supabase's
+# default unauthenticated 401 wrapper that drops our error envelope.
+verify_jwt = false
+
+[functions.reconcile-asaas-subscriptions]
+# Invoked by pg_cron via net.http_post — no user JWT context. Auth via
+# Vault-stored ASAAS_RECONCILE_AUTH_TOKEN compared constant-time.
+verify_jwt = false

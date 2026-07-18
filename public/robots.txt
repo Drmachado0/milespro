@@ -1,0 +1,13 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Block agency module from indexing (it's premium-only)
+Disallow: /agencia/
+Disallow: /sistema/
+
+# Sitemap
+Sitemap: https://app.milespro.net.br/sitemap.xml
+
+# Crawl-delay (be nice to server)
+Crawl-delay: 1

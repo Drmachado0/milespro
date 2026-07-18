@@ -1,0 +1,223 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  quality:
+    name: Lint, Typecheck & Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_PROJECT_ID: ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+
+      - name: Check bundle size
+        run: |
+          echo "## Bundle size" >> $GITHUB_STEP_SUMMARY
+          du -sh dist/ >> $GITHUB_STEP_SUMMARY
+          find dist/assets -name '*.js' -type f -exec du -h {} + | sort -rh | head -20 >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload dist artifact
+        if: github.event_name == 'push'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+
+  deno-tests:
+    name: Deno tests (edge functions)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: quality
+    # Resource leak from edge-function index.ts top-level Deno.serve() was fixed
+    # in 156f1d2 (gated behind import.meta.main) + 23b429e (JWT check reordered
+    # before Supabase client creation in create-managed-account). Job is now a
+    # required check — any failure here blocks deploys.
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run Deno tests for edge functions
+        # Use --allow-all because tests stub network/env; tightening permissions
+        # is a backlog item once we have more than one suite.
+        # OAUTH_STATE_SECRET is read at module load by google-calendar-auth's
+        # top-level env validation — provide a deterministic test value here.
+        env:
+          OAUTH_STATE_SECRET: test-oauth-state-secret-do-not-use-in-prod-0123456789abcdef
+          ASAAS_WEBHOOK_TOKEN: test-webhook-token-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          SUPABASE_URL: https://example.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: test-service-role
+        run: deno test --allow-all supabase/functions/**/*.test.ts
+
+  audit:
+    name: Security audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+  integration:
+    name: Adversarial RLS (Vitest + Supabase local)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: quality
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v2
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start Supabase
+        # Synchronous start — backgrounding `supabase start &` causes the
+        # supervised containers (realtime, rest, storage, pg_meta, studio,
+        # edge_runtime, pooler) to stop when the background process exits,
+        # leaving only the DB up. Wait for the CLI to return so the full
+        # stack is verified ready before proceeding.
+        run: supabase start
+
+      - name: Verify essential services up
+        run: |
+          # Print full status for the build log
+          supabase status
+
+          # Only require the services adversarial tests actually depend on:
+          # API (PostgREST), Auth (GoTrue), Database. imgproxy + pooler are
+          # production-grade extras that are sometimes skipped on lean runners
+          # and are not exercised by the RLS adversarial suite.
+          STATUS_OUT=$(supabase status 2>&1)
+          MISSING=()
+          for svc in supabase_rest supabase_auth supabase_db; do
+            if echo "$STATUS_OUT" | grep -q "Stopped services: .*${svc}"; then
+              MISSING+=("$svc")
+            fi
+          done
+          if [ "${#MISSING[@]}" -gt 0 ]; then
+            echo "ERROR: essential Supabase services are stopped: ${MISSING[*]}"
+            exit 1
+          fi
+
+          # Verify status -o env actually produces the keys we need (proves the
+          # API/Auth services are responsive, not just listed as running).
+          ENV_OUT=$(supabase status -o env \
+            --override-name api.url=SUPABASE_URL \
+            --override-name auth.service_role_key=SUPABASE_SERVICE_ROLE_KEY \
+            --override-name auth.anon_key=SUPABASE_ANON_KEY 2>/dev/null || true)
+          for key in SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY SUPABASE_ANON_KEY; do
+            if ! echo "$ENV_OUT" | grep -q "^${key}="; then
+              echo "ERROR: supabase status -o env did not emit ${key}"
+              echo "Full env output:"
+              echo "$ENV_OUT"
+              exit 1
+            fi
+          done
+
+          # Extra grace period for Docker internal DNS to settle (mitigates
+          # EAI_AGAIN on supabase_db_<ref> hostname resolution from sidecar containers)
+          sleep 5
+
+      - name: Export Supabase env
+        run: |
+          # `supabase status -o env` emits values wrapped in literal double quotes:
+          #   SUPABASE_URL="http://127.0.0.1:54321"
+          # GitHub Actions' $GITHUB_ENV parser keeps those quotes as part of the
+          # value, so Node sees process.env.SUPABASE_URL === '"http://127.0.0.1:54321"'
+          # and supabase-js rejects it with "Invalid supabaseUrl". Strip quotes.
+          supabase status -o env \
+            --override-name api.url=SUPABASE_URL \
+            --override-name auth.service_role_key=SUPABASE_SERVICE_ROLE_KEY \
+            --override-name auth.anon_key=SUPABASE_ANON_KEY \
+            | sed -E 's/^([A-Z_]+)="(.*)"$/\1=\2/' \
+            >> $GITHUB_ENV
+
+      - name: Reset DB to clean state with all migrations applied
+        run: |
+          # Retry up to 3 times — `supabase db reset` spins up sidecar containers
+          # (migra, pgmeta) that resolve the DB by hostname through Docker's internal
+          # DNS. On GitHub-hosted runners that DNS can flake with EAI_AGAIN; the
+          # network normally stabilises after a few seconds.
+          for attempt in 1 2 3; do
+            echo "::group::supabase db reset attempt $attempt"
+            if supabase db reset --no-seed --debug; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            if [ "$attempt" -lt 3 ]; then
+              echo "Reset failed on attempt $attempt, sleeping 10s then retrying..."
+              sleep 10
+            fi
+          done
+          exit 1
+
+      - name: Run adversarial integration tests
+        run: npm test -- --project=integration --run
+
+      - name: Stop Supabase
+        if: always()
+        run: supabase stop

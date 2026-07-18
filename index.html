@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://client.crisp.chat; worker-src 'self' blob:; connect-src 'self' https://opusftqbbaozucmbuuug.supabase.co wss://opusftqbbaozucmbuuug.supabase.co https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://fonts.googleapis.com https://fonts.gstatic.com https://storage.googleapis.com https://client.crisp.chat wss://client.relay.crisp.chat https://*.crisp.chat; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://client.crisp.chat; font-src 'self' data: https://fonts.gstatic.com https://client.crisp.chat; frame-src 'self' https://client.crisp.chat; base-uri 'self'; form-action 'self'; object-src 'none';" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <title>MilesPro - Gestão de Milhas Aéreas</title>
+    <link rel="canonical" href="https://app.milespro.net.br/" />
+    <meta name="description" content="MilesPro é a plataforma completa para gerenciamento de milhas aéreas e pontos de fidelidade. Controle Livelo, Esfera, TudoAzul, Smiles e cartões de crédito.">
+    <meta name="author" content="MilesPro" />
+    <meta name="keywords" content="milhas aéreas, pontos, fidelidade, Livelo, Smiles, TudoAzul, Esfera, Latam, gestão de milhas">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#e8590c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MilesPro" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Path C iOS (CRIT-03): disable iOS Safari/Capacitor auto-linkification
+         of phone numbers, addresses, emails, AND URLs in plain text so that
+         neutral copy referencing milespro.net.br on /assinatura cannot be
+         interpreted as a clickable link routing out of the app to web
+         checkout (Apple Multiplatform Services exemption 3.1.3b). -->
+    <meta name="format-detection" content="telephone=no, address=no, email=no, url=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image" href="/pwa-512x512.png" />
+
+    <!-- Preconnect to critical origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://opusftqbbaozucmbuuug.supabase.co" />
+
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Load fonts asynchronously using media attribute trick (non-blocking) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    </noscript>
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://app.milespro.net.br/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://app.milespro.net.br/og-image.png">
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="MilesPro" />
+    <meta property="og:title" content="MilesPro - Gestão de Milhas Aéreas">
+    <meta property="og:description" content="MilesPro é a plataforma completa para gerenciamento de milhas aéreas e pontos de fidelidade. Controle Livelo, Esfera, TudoAzul, Smiles e cartões de crédito.">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://app.milespro.net.br/og-image.png">
+    <meta name="twitter:title" content="MilesPro - Gestão de Milhas Aéreas">
+    <meta name="twitter:description" content="MilesPro é a plataforma completa para gerenciamento de milhas aéreas e pontos de fidelidade. Controle Livelo, Esfera, TudoAzul, Smiles e cartões de crédito.">
+
+    <!-- Capacitor -->
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-76K94DJ792"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-76K94DJ792');
+    </script>
+  </head>
+
+  <body>
+    <!-- Critical inline styles for immediate render -->
+    <style>
+      *,*::before,*::after{box-sizing:border-box}
+      body{font-family:'DM Sans',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;margin:0;line-height:1.5;-webkit-font-smoothing:antialiased;background:#f5f7fa}
+      @media(prefers-color-scheme:dark){body{background:#171717}}
+      #root{min-height:100vh;display:flex;flex-direction:column}
+      .container{width:100%;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
+      @media(min-width:1024px){.container{max-width:1280px;padding-left:2rem;padding-right:2rem}}
+      h1,h2,h3,p{margin:0}
+      button{cursor:pointer}
+      img{max-width:100%;height:auto}
+      /* Inline skeleton for immediate FCP */
+      .init-skeleton{position:fixed;inset:0;z-index:9999;background:#f5f7fa;display:flex;flex-direction:column}
+      @media(prefers-color-scheme:dark){.init-skeleton{background:#171717}}
+      .init-header{height:64px;border-bottom:1px solid #e5e7ef;display:flex;align-items:center;padding:0 16px;gap:8px;background:#ffffff}
+      @media(prefers-color-scheme:dark){.init-header{border-color:#404040;background:#262626}}
+      .init-logo{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#f97316,#ea580c)}
+      .init-text{width:80px;height:24px;background:#e5e7ef;border-radius:4px}
+      @media(prefers-color-scheme:dark){.init-text{background:#404040}}
+      .init-spacer{flex:1}
+      .init-btn{width:100px;height:36px;background:#e8590c;border-radius:8px}
+    </style>
+    <div id="root">
+      <!-- Inline skeleton for immediate First Contentful Paint -->
+      <div id="initial-skeleton" class="init-skeleton">
+        <header class="init-header">
+          <div class="init-logo"></div>
+          <div class="init-text"></div>
+          <div class="init-spacer"></div>
+          <div class="init-btn"></div>
+        </header>
+      </div>
+    </div>
+    <script>
+      // Remove skeleton only when app signals successful mount
+      (function() {
+        var removed = false;
+        function removeSkeleton() {
+          if (removed) return;
+          removed = true;
+          var s = document.getElementById('initial-skeleton');
+          if (s) {
+            s.style.transition = 'opacity 200ms';
+            s.style.opacity = '0';
+            setTimeout(function() { if (s && s.parentNode) s.parentNode.removeChild(s); }, 220);
+          }
+        }
+        window.addEventListener('app:mounted', removeSkeleton);
+        // Safety net: if app never mounts in 15s, leave skeleton (fallback UI will replace #root contents)
+        setTimeout(function() {
+          var root = document.getElementById('root');
+          // If root has been replaced with fallback or app, remove skeleton
+          if (root && root.children.length > 1) removeSkeleton();
+        }, 15000);
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,698 @@
+/* Fonts are loaded via index.html with preload for non-blocking render */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
+All colors MUST be HSL.
+*/
+
+/* Safe Area Insets for devices with notch (iPhone X+) */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+}
+
+@layer base {
+  /* ═══════════════════════════════════════════════════════════════════════
+     MilesPro Design System v2 — dark-first
+     Tokens mapped from /design-reference/colors_and_type.css.
+     Dark is canonical (defined on :root). Light mirrors under .light.
+     shadcn names preserved; values updated to v2.
+     All colors HSL so alpha utilities work.
+     ═══════════════════════════════════════════════════════════════════════ */
+  :root {
+    /* ───────── Surface scale (dark-first) ───────── */
+    --mp-surface-base:    225 16% 5%;     /* #0A0B0F */
+    --mp-surface-sunken:  230 18% 3%;     /* #07080B */
+    --mp-surface-1:       225 13% 7%;     /* #0F1014 */
+    --mp-surface-2:       228 13% 9%;     /* #14151B */
+    --mp-surface-3:       228 13% 12%;    /* #191A21 */
+    --mp-surface-4:       228 13% 14%;    /* #1F2028 */
+    --mp-surface-5:       228 12% 17%;    /* #25262F */
+    --mp-surface-overlay: 228 12% 19%;    /* #2A2C36 */
+    --mp-surface-scrim: 225 29% 3%;
+
+    /* ───────── Foreground ───────── */
+    --mp-fg-primary:   225 17% 96%;       /* #F4F5F8 */
+    --mp-fg-secondary: 225 7%  68%;       /* #A8AAB4 */
+    --mp-fg-tertiary:  228 6%  46%;       /* #6E707B */
+    --mp-fg-disabled:  228 6%  27%;
+
+    /* ───────── Brand orange palette ───────── */
+    --mp-orange-50:  24 100% 95%;
+    --mp-orange-100: 28 100% 86%;
+    --mp-orange-200: 27 100% 76%;
+    --mp-orange-300: 24 100% 66%;
+    --mp-orange-400: 22 100% 59%;
+    --mp-orange-500: 20 100% 55%;        /* #FF6A1A — primary */
+    --mp-orange-600: 23 90%  48%;        /* #E8590C */
+    --mp-orange-700: 22 92%  39%;
+    --mp-orange-800: 22 92%  29%;
+    --mp-orange-900: 22 92%  19%;
+
+    /* ───────── Semantic ───────── */
+    --mp-success: 142 71% 45%;
+    --mp-warning: 38 92% 50%;
+    --mp-danger:  0  84% 60%;
+    --mp-info:    217 91% 60%;
+    --mp-magenta: 333 100% 59%;          /* #FF2D87 — brand magenta, accent twin do orange-500 no gradient hero */
+    --mp-violet:  258 90% 66%;           /* #8B5CF6 — equivalente a violet-500 Tailwind, accent canônico (KPICard accent="violet") */
+
+    /* ───────── shadcn semantic mapping (DARK CANONICAL) ───────── */
+    --background: var(--mp-surface-base);
+    --foreground: var(--mp-fg-primary);
+
+    --card: var(--mp-surface-2);
+    --card-foreground: var(--mp-fg-primary);
+
+    --popover: var(--mp-surface-5);
+    --popover-foreground: var(--mp-fg-primary);
+
+    --primary: var(--mp-orange-500);
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: var(--mp-surface-3);
+    --secondary-foreground: var(--mp-fg-primary);
+
+    --muted: var(--mp-surface-3);
+    --muted-foreground: var(--mp-fg-secondary);
+
+    --accent: var(--mp-surface-4);
+    --accent-foreground: var(--mp-orange-400);
+
+    --destructive: var(--mp-danger);
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 228 13% 16%;
+    --border-subtle: 228 13% 12%;
+    --border-strong: 228 13% 22%;
+    --input: var(--mp-surface-4);
+    --ring: var(--mp-orange-500);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: var(--mp-surface-sunken);
+    --sidebar-foreground: var(--mp-fg-primary);
+    --sidebar-primary: var(--mp-orange-500);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: var(--mp-surface-3);
+    --sidebar-accent-foreground: var(--mp-fg-primary);
+    --sidebar-border: 228 13% 12%;
+    --sidebar-ring: var(--mp-orange-500);
+    --sidebar: var(--mp-surface-sunken);
+
+    /* Charts */
+    --chart-1: 22 100% 59%;
+    --chart-2: 158 64% 52%;
+    --chart-3: 213 94% 68%;
+    --chart-4: 258 90% 76%;
+    --chart-5: 43 96% 56%;
+
+    /* ───────── Typography ───────── */
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-display: 'Inter', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Libre Caslon Text', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* ───────── Shadows — dual layer ───────── */
+    --shadow-flat: 0 0 0 1px rgba(255,255,255,0.04);
+    --shadow-raised: 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.40), 0 8px 16px -8px rgba(0,0,0,0.40);
+    --shadow-floating: 0 0 0 1px rgba(255,255,255,0.06), 0 4px 8px rgba(0,0,0,0.30), 0 16px 32px -12px rgba(0,0,0,0.55);
+    --shadow-overlay-token: 0 0 0 1px rgba(255,255,255,0.08), 0 8px 16px rgba(0,0,0,0.40), 0 24px 48px -16px rgba(0,0,0,0.65);
+    --shadow-modal: 0 0 0 1px rgba(255,255,255,0.08), 0 16px 32px rgba(0,0,0,0.45), 0 48px 80px -24px rgba(0,0,0,0.70);
+
+    /* Color glows */
+    --glow-orange:  0 8px 32px -8px rgba(255,106,26,0.35);
+    --glow-magenta: 0 8px 32px -8px rgba(255,45,135,0.30);
+    --glow-emerald: 0 8px 32px -8px rgba(52,211,153,0.25);
+    --glow-sky:     0 8px 32px -8px rgba(96,165,250,0.25);
+    --glow-violet:  0 8px 32px -8px rgba(167,139,250,0.25);
+
+    /* Legacy shadow aliases */
+    --shadow-2xs: var(--shadow-flat);
+    --shadow-xs:  var(--shadow-flat);
+    --shadow-sm:  var(--shadow-raised);
+    --shadow:     var(--shadow-raised);
+    --shadow-md:  var(--shadow-floating);
+    --shadow-lg:  var(--shadow-overlay-token);
+    --shadow-xl:  var(--shadow-modal);
+    --shadow-2xl: var(--shadow-modal);
+    --shadow-glow-primary: var(--glow-orange);
+
+    /* ───────── Gradients ───────── */
+    --gradient-hero:           linear-gradient(135deg, #FF6A1A 0%, #FF2D87 100%);
+    --gradient-orange-magenta: linear-gradient(135deg, #FF6A1A 0%, #FF2D87 100%);
+    --gradient-orange-amber:   linear-gradient(135deg, #FF6A1A 0%, #FFB020 100%);
+    --gradient-surface:        linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.00) 100%);
+    --gradient-spotlight:      radial-gradient(120% 80% at 20% 0%, rgba(255,106,26,0.18) 0%, rgba(255,45,135,0.06) 40%, transparent 70%);
+
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+
+    --shimmer-from: 228 13% 9%;
+    --shimmer-via:  228 13% 16%;
+    --shimmer-to:   228 13% 9%;
+
+    --mp-sidebar-w: 16rem;
+    --mp-sidebar-collapsed: 4rem;
+    --mp-header-h: 4rem;
+    --mp-content-max: 90rem;
+    --mp-row-h: 3rem;
+  }
+
+  /* `.dark` keeps the same dark-first tokens (no overrides needed). */
+  .dark { color-scheme: dark; }
+
+  /* ─────────────── Light theme (mirror) ─────────────── */
+  .light {
+    color-scheme: light;
+
+    /* Surface scale — light mirror */
+    --mp-surface-base:    220 16% 98%;
+    --mp-surface-sunken:  220 18% 99%;
+    --mp-surface-1:       220 14% 96%;
+    --mp-surface-2:       0   0%  100%;
+    --mp-surface-3:       220 14% 95%;
+    --mp-surface-4:       220 13% 92%;
+    --mp-surface-5:       220 13% 88%;
+    --mp-surface-overlay: 220 13% 85%;
+    --mp-surface-scrim:   220 30% 96%;
+
+    /* Foreground — light mirror */
+    --mp-fg-primary:   225 25% 10%;
+    --mp-fg-secondary: 220 12% 35%;
+    --mp-fg-tertiary:  220 8%  50%;
+    --mp-fg-disabled:  220 7%  72%;
+
+    --background: 220 16% 98%;
+    --foreground: 225 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 225 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 25% 10%;
+    --primary: 20 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 13% 94%;
+    --secondary-foreground: 220 20% 22%;
+    --muted: 220 14% 95%;
+    --muted-foreground: 220 10% 44%;
+    --accent: 24 100% 96%;
+    --accent-foreground: 20 100% 40%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 14% 91%;
+    --border-subtle: 220 15% 94%;
+    --border-strong: 220 13% 82%;
+    --input: 220 14% 91%;
+    --ring: 20 100% 50%;
+    --sidebar-background: 220 18% 99%;
+    --sidebar-foreground: 225 25% 10%;
+    --sidebar-accent: 220 14% 95%;
+    --sidebar-accent-foreground: 220 20% 22%;
+    --sidebar-border: 220 14% 91%;
+    --sidebar: 220 18% 99%;
+    --shimmer-from: 220 14% 92%;
+    --shimmer-via:  220 14% 97%;
+    --shimmer-to:   220 14% 92%;
+
+    /* Shadows — soft black tint over light bg */
+    --shadow-flat:          0 0 0 1px rgba(0,0,0,0.04);
+    --shadow-raised:        0 0 0 1px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.06), 0 8px 16px -8px rgba(0,0,0,0.08);
+    --shadow-floating:      0 0 0 1px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px -12px rgba(0,0,0,0.12);
+    --shadow-overlay-token: 0 0 0 1px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.10), 0 24px 48px -16px rgba(0,0,0,0.15);
+    --shadow-modal:         0 0 0 1px rgba(0,0,0,0.08), 0 16px 32px rgba(0,0,0,0.12), 0 48px 80px -24px rgba(0,0,0,0.18);
+
+    /* Gradient surface — black tint */
+    --gradient-surface: linear-gradient(180deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.00) 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    /* Remove tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ─────────────── Theme transition (dark ↔ light) ─────────────── */
+  /* Scoped to root containers only — applying transitions to every bg-/text-/border- class
+     in the app caused jank in heavy lists (DataTable, IR report). The body transition below
+     covers the canvas; individual components opt-in to color transitions via .transition-colors. */
+  html, body {
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+  /* Honra prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    html, body {
+      transition: none;
+    }
+  }
+
+  html {
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior-y: contain;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Better text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+body {
+    @apply bg-background text-foreground;
+    /* Prevent overscroll bounce */
+    overscroll-behavior-y: contain;
+    /* Safe area padding for notch devices */
+    padding-top: var(--safe-area-inset-top);
+    padding-bottom: var(--safe-area-inset-bottom);
+    padding-left: var(--safe-area-inset-left);
+    padding-right: var(--safe-area-inset-right);
+    /* Prevent text size adjustment on orientation change */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Font feature settings for DM Sans */
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0;
+  }
+
+  /* Touch-optimized inputs */
+  input, textarea, select, button {
+    touch-action: manipulation;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Scrollable areas optimization */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.6s ease-out forwards;
+  will-change: transform;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+/* GPU-accelerated animations for sidebar and modals */
+.sidebar-animate {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize chart containers */
+.recharts-wrapper {
+  will-change: auto;
+}
+
+.recharts-wrapper:hover {
+  will-change: contents;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Disable animations and heavy effects on mobile for performance */
+@media (max-width: 640px) {
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-slide-down,
+  .animate-pulse-slow {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* Remove heavy blur filter on mobile */
+  .blur-3xl {
+    filter: none !important;
+    opacity: 0.3;
+  }
+
+  /* Faster transitions on mobile */
+  .transition-all {
+    transition-duration: 150ms !important;
+  }
+
+  /* Reduce backdrop blur on mobile */
+  .backdrop-blur-md {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Disable will-change on mobile to save memory */
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-slide-down,
+  .sidebar-animate {
+    will-change: auto !important;
+  }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Safe area for sticky mobile CTA */
+.safe-area-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+}
+
+/* Tour highlight animation for highlighted elements */
+[data-tour-highlight="true"] {
+  position: relative;
+  z-index: 101;
+  animation: tour-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.3);
+  border-radius: var(--radius);
+}
+
+@keyframes tour-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 4px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px hsl(var(--primary) / 0.1);
+  }
+}
+
+/* Hidden scrollbar utility */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Utility Classes ── */
+.glass-card {
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+}
+
+.gradient-mesh {
+  background:
+    radial-gradient(70% 38% at 50% 0%, hsl(var(--primary) / 0.06) 0%, transparent 62%),
+    linear-gradient(180deg, hsl(var(--mp-surface-base)) 0%, hsl(var(--mp-surface-sunken)) 100%),
+    hsl(var(--background));
+}
+
+.mp-app-shell {
+  position: relative;
+  background:
+    radial-gradient(60% 40% at 8% 0%, hsl(var(--primary) / 0.06) 0%, transparent 55%),
+    radial-gradient(45% 35% at 95% 6%, rgba(255, 45, 135, 0.04) 0%, transparent 60%),
+    linear-gradient(180deg, hsl(var(--mp-surface-base)) 0%, hsl(var(--mp-surface-sunken)) 100%);
+}
+
+/* Subtle grain over dark canvas — only on hi-DPI desktop for perf */
+@media (min-width: 769px) {
+  .mp-app-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.022;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .light .mp-app-shell::before { opacity: 0; }
+}
+
+.mp-app-shell > * {
+  position: relative;
+  z-index: 2;
+}
+
+.mp-shell-panel {
+  background: hsl(var(--mp-surface-2) / 0.72);
+  border-color: hsl(var(--border) / 0.85);
+  box-shadow: var(--shadow-flat);
+}
+
+.mp-shell-control {
+  background: hsl(var(--mp-surface-3) / 0.78);
+  border: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-flat);
+}
+
+.mp-shell-control:hover {
+  background: hsl(var(--mp-surface-4) / 0.86);
+  border-color: hsl(var(--border-strong));
+}
+
+.mp-numeric,
+.mp-money {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.mp-overline {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.card-hover {
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 300ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.focus-glow:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 3px;
+}
+
+/* Mobile: disable backdrop-filter for perf */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: hsl(var(--card));
+  }
+}
+
+/* Float animation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Shake animation for form validation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* =========================================================================
+   PRINT / PDF — light-paper rendering for browser-print (Cmd+P / Ctrl+P)
+   Used by Relatórios, IR view, Faturas. The IR/Invoice generators emit
+   their own PDFs via jsPDF; this is for the secondary "print page" flow.
+   ========================================================================= */
+
+@media print {
+  /* Hard-reset to white-paper rendering even when app is in dark mode */
+  :root,
+  html,
+  body,
+  .mp-app-shell {
+    background: #ffffff !important;
+    color: #0e1014 !important;
+    color-scheme: light !important;
+  }
+
+  /* Strip decorative chrome */
+  .mp-app-shell::before,
+  .mp-app-shell::after,
+  .gradient-mesh,
+  .glass-card { background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
+
+  /* Hide app shell — only the report body should print */
+  header,
+  nav,
+  aside,
+  .no-print,
+  [data-print="hide"],
+  .mobile-bottom-nav,
+  [aria-label="Navegação principal"],
+  [aria-label="Menu"] { display: none !important; }
+
+  /* Cards / surfaces: flat with hairline borders for paper */
+  .bg-card,
+  .bg-background,
+  [class*="bg-card"],
+  [class*="bg-muted"] {
+    background: #ffffff !important;
+    border-color: #e2e4ea !important;
+    box-shadow: none !important;
+  }
+
+  /* Foreground colors: ensure ink-dark text on paper */
+  .text-foreground,
+  .text-card-foreground { color: #0e1014 !important; }
+  .text-muted-foreground { color: #4a4c55 !important; }
+
+  /* Brand orange stays as the only accent for KPIs / eyebrows */
+  .text-primary { color: #ff6a1a !important; }
+  .bg-primary { background: #ff6a1a !important; color: #ffffff !important; }
+
+  /* Status colors: tame for paper */
+  .text-success { color: #15803d !important; }
+  .text-warning { color: #b45309 !important; }
+  .text-destructive { color: #b91c1c !important; }
+
+  /* Numerical data: keep monospace tabular for legible columns */
+  .font-mono,
+  [class*="tabular-nums"] {
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  /* Tables: paper-style borders */
+  table { page-break-inside: auto; border-color: #d9dbe1 !important; }
+  thead { display: table-header-group; background: #f4f4f1 !important; }
+  tr { page-break-inside: avoid; page-break-after: auto; }
+  th, td { border-color: #e2e4ea !important; }
+
+  /* Page breaks: don't split KPI strips */
+  [class*="grid-cols-"][class*="gap-"] { page-break-inside: avoid; }
+
+  /* Hero / eyebrow glow gone */
+  [class*="shadow-["] { box-shadow: none !important; }
+
+  /* Layout: full-width single column for paper */
+  main, .container, [class*="max-w-["] {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4 portrait;
+    margin: 16mm 14mm;
+  }
+}
