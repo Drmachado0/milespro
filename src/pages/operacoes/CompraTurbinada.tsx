@@ -169,10 +169,20 @@ export default function CompraTurbinada() {
   const custoMilheiroBonus = 0;
   const custoTotalMilhas = 0;
 
-  // Validation
+  // Validation — cada campo obrigatório vira um item de "pendências" para
+  // deixar explícito por que o botão SALVAR fica desabilitado (evita o
+  // "botão travado sem explicação" reportado nos testes de UX).
   const produtoMinLength = 5;
   const isProdutoValid = formData.produto.length >= produtoMinLength;
-  const isFormValid = formData.program && isProdutoValid && formData.lojaParceira && precoProdutoNumber > 0 && pontosBonusPorRealNumber > 0 && formData.dataBonus;
+
+  const missingFields: string[] = [];
+  if (!formData.program) missingFields.push('Programa');
+  if (!isProdutoValid) missingFields.push(`Produto (mín. ${produtoMinLength} caracteres)`);
+  if (!formData.lojaParceira) missingFields.push('Loja parceira');
+  if (!(precoProdutoNumber > 0)) missingFields.push('Preço do Produto');
+  if (!(pontosBonusPorRealNumber > 0)) missingFields.push('Pontos Bônus/R$');
+  if (!formData.dataBonus) missingFields.push('Data do Bônus');
+  const isFormValid = missingFields.length === 0;
 
   const handlePrecoProdutoChange = (value: string) => {
     setFormData({ ...formData, precoProduto: formatCurrencyInput(value) });
@@ -347,7 +357,7 @@ export default function CompraTurbinada() {
               {/* Linha 3 - Produto e Loja */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-muted-foreground">Produto</Label>
+                  <Label className="text-muted-foreground">Produto *</Label>
                   <Input
                     type="text"
                     placeholder="Nome do produto"
@@ -364,7 +374,7 @@ export default function CompraTurbinada() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-muted-foreground">Loja parceira</Label>
+                  <Label className="text-muted-foreground">Loja parceira *</Label>
                   <Select
                     value={formData.lojaParceira}
                     onValueChange={(value) => setFormData({ ...formData, lojaParceira: value })}
@@ -386,7 +396,7 @@ export default function CompraTurbinada() {
               {/* Linha 4 - Preço, Pontos/R$, Bônus, Validade */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-muted-foreground">Preço do Produto</Label>
+                  <Label className="text-muted-foreground">Preço do Produto *</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">R$</span>
                     <Input
@@ -400,7 +410,7 @@ export default function CompraTurbinada() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-muted-foreground">Pontos Bônus/R$</Label>
+                  <Label className="text-muted-foreground">Pontos Bônus/R$ *</Label>
                   <div className="relative">
                     <Input
                       type="text"
@@ -503,7 +513,7 @@ export default function CompraTurbinada() {
 
               {/* Linha 7 - Data do Bônus */}
               <div className="space-y-4">
-                <Label className="text-muted-foreground">Data do Bônus</Label>
+                <Label className="text-muted-foreground">Data do Bônus *</Label>
                 <RadioGroup
                   value={formData.dataBonusMode}
                   onValueChange={(value: 'dias' | 'especifica') => setFormData({ ...formData, dataBonusMode: value })}
@@ -590,21 +600,29 @@ export default function CompraTurbinada() {
               </div>
 
               {/* Botões */}
-              <div className="flex justify-end gap-3">
-                <Button 
-                  type="button" 
-                  variant="outline"
-                  onClick={() => navigate(-1)}
-                >
-                  CANCELAR
-                </Button>
-                <Button 
-                  type="submit"
-                  disabled={isSubmitting || !isFormValid}
-                >
-                  {isSubmitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                  SALVAR
-                </Button>
+              <div className="flex flex-col items-end gap-2">
+                {!isFormValid && missingFields.length > 0 && (
+                  <p className="text-xs text-muted-foreground text-right">
+                    Preencha para salvar:{' '}
+                    <span className="text-foreground/80">{missingFields.join(', ')}</span>
+                  </p>
+                )}
+                <div className="flex justify-end gap-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => navigate(-1)}
+                  >
+                    CANCELAR
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || !isFormValid}
+                  >
+                    {isSubmitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                    SALVAR
+                  </Button>
+                </div>
               </div>
             </form>
           </CardContent>
