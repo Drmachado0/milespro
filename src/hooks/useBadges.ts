@@ -6,7 +6,7 @@ import { useOnboarding } from '@/hooks/useOnboarding';
 import { useMilestoneStats } from '@/hooks/useMilestoneStats';
 import { BADGES, Badge, UnlockedBadge, BadgesProgress } from '@/data/badges';
 import { ONBOARDING_STEPS, REQUIRED_STEPS } from '@/data/onboardingSteps';
-import { toast } from 'sonner';
+import { notifyAchievement } from '@/components/achievements/AchievementToast';
 
 interface OnboardingProgressWithBadges {
   completed: string[];
@@ -15,6 +15,14 @@ interface OnboardingProgressWithBadges {
   badges?: Record<string, UnlockedBadge>;
   total_points?: number;
 }
+
+// Module-level guard: badges already surfaced via toast this session,
+// keyed by `${userId}:${badgeId}`. Shared across every component that mounts
+// useBadges (Header — on every page — plus OnboardingCard, BadgesShowcase and
+// Conquistas), so a single unlock fires exactly ONE "+X pontos" toast instead
+// of one per mounted instance. Keyed by user so switching accounts still
+// notifies the new user about their own badges.
+const notifiedBadgeKeys = new Set<string>();
 
 export function useBadges() {
   const { user } = useAuth();
@@ -201,38 +209,55 @@ export function useBadges() {
     },
   });
 
+  // `mutate` is referentially stable across renders (unlike the mutation
+  // object itself), so depending on it below doesn't re-fire the effect.
+  const persistBadges = persistBadgesMutation.mutate;
+
   // Auto-persist and notify when new badges are unlocked
   useEffect(() => {
-    if (newlyUnlockedBadges.length === 0 || !hasInitializedRef.current) {
+    if (newlyUnlockedBadges.length === 0 || !hasInitializedRef.current || !user?.id) {
       return;
     }
 
-    // Show toasts for new badges
-    newlyUnlockedBadges.forEach(badge => {
-      toast.success(`🎉 Conquista desbloqueada: ${badge.name}`, {
-        description: `+${badge.points} pontos`,
-        duration: 5000,
-      });
+    // De-dupe across the multiple components that mount useBadges and across
+    // re-renders — otherwise each instance fires its own toast for the same
+    // badge, producing the stacked/duplicated "+X pontos" pop-ups.
+    const badgesToNotify = newlyUnlockedBadges.filter(
+      (badge) => !notifiedBadgeKeys.has(`${user.id}:${badge.id}`)
+    );
+
+    badgesToNotify.forEach((badge) => {
+      notifiedBadgeKeys.add(`${user.id}:${badge.id}`);
+      notifyAchievement(badge);
     });
+
+    // Capture the previously-known set BEFORE overwriting the ref, so freshly
+    // unlocked badges are correctly persisted as unseen (`seen: false`).
+    const previouslyKnown = previousBadgesRef.current;
 
     // Update ref for next comparison
     previousBadgesRef.current = new Set(unlockedBadgeIds);
 
+    // Only the instance that actually surfaced new badges persists, to avoid
+    // redundant writes from every mounted hook instance.
+    if (badgesToNotify.length === 0) {
+      return;
+    }
+
     // AUTO-PERSIST to database
     const badges: Record<string, UnlockedBadge> = {};
-    unlockedBadgeIds.forEach(id => {
-      const existingBadge = previousBadgesRef.current.has(id);
+    unlockedBadgeIds.forEach((id) => {
       badges[id] = {
         unlocked_at: new Date().toISOString(),
-        seen: existingBadge,
+        seen: previouslyKnown.has(id),
       };
     });
 
-    persistBadgesMutation.mutate({
+    persistBadges({
       badges,
       total_points: totalPoints,
     });
-  }, [newlyUnlockedBadges, unlockedBadgeIds, totalPoints, persistBadgesMutation]);
+  }, [newlyUnlockedBadges, unlockedBadgeIds, totalPoints, persistBadges, user?.id]);
 
   // Mark a badge as seen
   const markBadgeSeen = useCallback((badgeId: string) => {
@@ -247,11 +272,11 @@ export function useBadges() {
       };
     });
     
-    persistBadgesMutation.mutate({
+    persistBadges({
       badges,
       total_points: totalPoints,
     });
-  }, [unlockedBadgeIds, totalPoints, persistBadgesMutation]);
+  }, [unlockedBadgeIds, totalPoints, persistBadges]);
 
   // Get badges by category
   const onboardingBadges = useMemo(() => 
