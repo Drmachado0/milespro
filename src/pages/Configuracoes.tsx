@@ -67,6 +67,7 @@ import {
   Languages,
   Download,
   Mail,
+  Lock,
 } from 'lucide-react';
 import { logger } from '@/lib/logger';
 
@@ -202,7 +203,7 @@ export default function Configuracoes() {
       if (permission === 'denied') {
         toast({
           title: 'Permissão negada',
-          description: 'Clique no ícone de cadeado 🔒 na barra de endereço para permitir notificações.',
+          description: 'Clique no ícone de cadeado na barra de endereço para permitir notificações.',
           variant: 'destructive',
         });
         return;
@@ -640,9 +641,10 @@ export default function Configuracoes() {
                     <p className="text-sm text-destructive font-medium">
                       Notificações bloqueadas pelo navegador
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Para reativar, clique no ícone de cadeado 🔒 na barra de endereço do navegador
-                      e altere a permissão de notificações para "Permitir".
+                    <p className="text-xs text-muted-foreground mt-1 flex items-start gap-1.5">
+                      <Lock className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                      <span>Para reativar, clique no ícone de cadeado na barra de endereço do navegador
+                      e altere a permissão de notificações para "Permitir".</span>
                     </p>
                   </div>
                 )}
@@ -1082,7 +1084,7 @@ export default function Configuracoes() {
                 </div>
                 <p className="text-sm text-muted-foreground">
                   Enviamos um e-mail de confirmação. Após confirmar, sua conta é
-                  excluída em 7 dias — você pode reverter dentro desse prazo
+                  excluída em 7 dias. Você pode reverter dentro desse prazo
                   escrevendo para dpo@milespro.net.br.
                 </p>
               </div>

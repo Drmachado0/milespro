@@ -15,7 +15,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { EmptyState } from '@/components/ui/empty-state';
 import {
   Mail, Send, Paperclip, X, Search, Trash2,
-  CheckCircle, XCircle, Clock, FileText, Loader2, MailOpen
+  CheckCircle, XCircle, Clock, FileText, Loader2, MailOpen, AlertTriangle
 } from 'lucide-react';
 import { useTravelClients } from '@/hooks/travel';
 import { 
@@ -276,9 +276,10 @@ export default function Comunicacao() {
                     <p className="text-xs text-muted-foreground">
                       Tamanho máximo: 5MB
                     </p>
-                    <p className="text-xs text-warning dark:text-warning mt-2">
-                      ⚠️ Modo teste: emails só podem ser enviados para o endereço da conta Resend.
-                      Para produção, <a href="https://resend.com/domains" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">verifique seu domínio</a>.
+                    <p className="text-xs text-warning dark:text-warning mt-2 flex items-start gap-1.5">
+                      <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                      <span>Modo teste: emails só podem ser enviados para o endereço da conta Resend.
+                      Para produção, <a href="https://resend.com/domains" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">verifique seu domínio</a>.</span>
                     </p>
                   </div>
 

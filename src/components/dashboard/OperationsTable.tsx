@@ -124,13 +124,13 @@ export function OperationsTable({ operations, title = 'Operações Recentes', sh
                     <TableCell className="text-right font-mono tabular-nums">
                       {op.total_cost && op.total_cost > 0
                         ? formatCurrency(Number(op.total_cost))
-                        : '—'
+                        : '-'
                       }
                     </TableCell>
                     <TableCell className="text-right font-mono tabular-nums">
                       {op.cost_per_thousand && op.cost_per_thousand > 0
                         ? formatCurrency(Number(op.cost_per_thousand))
-                        : '—'
+                        : '-'
                       }
                     </TableCell>
                     <TableCell className="pr-6">

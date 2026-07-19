@@ -360,7 +360,7 @@ export default function Analises() {
                         </td>
                         <td className="py-3 px-4 text-right font-mono tabular-nums">{formatNumber(program.balance)}</td>
                         <td className="py-3 px-4 text-right font-mono tabular-nums">
-                          {program.averageCost > 0 ? formatCurrency(program.averageCost) : '—'}
+                          {program.averageCost > 0 ? formatCurrency(program.averageCost) : '-'}
                         </td>
                         <td className="py-3 px-4 text-right font-mono tabular-nums">
                           {formatCurrency(program.totalInvested)}

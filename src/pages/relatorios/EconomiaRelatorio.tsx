@@ -225,7 +225,7 @@ export default function EconomiaRelatorio() {
                 <p className="text-sm text-muted-foreground font-medium">Economia Total no Período</p>
                 <p
                   className={cn(
-                    'text-4xl font-bold',
+                    'text-4xl font-bold font-mono tabular-nums tracking-tight',
                     (data?.totalSavings || 0) >= 0 ? 'text-success' : 'text-destructive'
                   )}
                 >
@@ -268,7 +268,7 @@ export default function EconomiaRelatorio() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground truncate">{label}</p>
-                    <p className={cn('text-sm font-bold', value >= 0 ? 'text-success' : 'text-destructive')}>
+                    <p className={cn('text-sm font-bold font-mono tabular-nums tracking-tight', value >= 0 ? 'text-success' : 'text-destructive')}>
                       {formatCurrency(value)}
                     </p>
                   </div>
@@ -467,7 +467,7 @@ export default function EconomiaRelatorio() {
                         <div className="flex-1">
                           <p className="font-medium text-sm">{item.name}</p>
                         </div>
-                        <p className="font-semibold text-sm text-success">{formatCurrency(item.value)}</p>
+                        <p className="font-semibold text-sm text-success font-mono tabular-nums tracking-tight">{formatCurrency(item.value)}</p>
                       </div>
                     ))}
                     {categoryChartData.length === 0 && (
@@ -494,7 +494,7 @@ export default function EconomiaRelatorio() {
                         <p className="font-medium text-sm">{h.holder_name}</p>
                         <p className="text-xs text-muted-foreground">{h.reservationsCount} reservas</p>
                       </div>
-                      <p className={cn('font-bold text-lg', h.savings >= 0 ? 'text-success' : 'text-destructive')}>
+                      <p className={cn('font-bold text-lg font-mono tabular-nums tracking-tight', h.savings >= 0 ? 'text-success' : 'text-destructive')}>
                         {formatCurrency(h.savings)}
                       </p>
                     </div>
@@ -539,11 +539,11 @@ export default function EconomiaRelatorio() {
                               </Badge>
                             </TableCell>
                             <TableCell className="max-w-[200px] truncate">{r.description}</TableCell>
-                            <TableCell>{formatDate(r.date)}</TableCell>
-                            <TableCell className="text-right">{formatCurrency(r.total_cost_brl)}</TableCell>
-                            <TableCell className="text-right">{formatCurrency(r.cash_price)}</TableCell>
+                            <TableCell className="font-mono tabular-nums">{formatDate(r.date)}</TableCell>
+                            <TableCell className="text-right font-mono tabular-nums tracking-tight">{formatCurrency(r.total_cost_brl)}</TableCell>
+                            <TableCell className="text-right font-mono tabular-nums tracking-tight">{formatCurrency(r.cash_price)}</TableCell>
                             <TableCell className="text-right">
-                              <span className={cn('font-medium', r.savings >= 0 ? 'text-success' : 'text-destructive')}>
+                              <span className={cn('font-medium font-mono tabular-nums tracking-tight', r.savings >= 0 ? 'text-success' : 'text-destructive')}>
                                 {r.savings >= 0 ? (
                                   <TrendingUp className="h-3 w-3 inline mr-1" />
                                 ) : (

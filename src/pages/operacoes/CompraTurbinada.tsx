@@ -263,7 +263,7 @@ export default function CompraTurbinada() {
           eyebrow="Operação"
           icon={<Rocket className="h-5 w-5" />}
           title="Compra Turbinada"
-          subtitle="Compra com bônus — inclui transferência bonificada e promoções"
+          subtitle="Compra com bônus: inclui transferência bonificada e promoções"
         />
 
         <Card>

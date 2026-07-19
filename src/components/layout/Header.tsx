@@ -1,4 +1,4 @@
-import { Bell, Menu, Search, LogOut, ExternalLink, Gift, AlertTriangle, Star, CheckCircle, User, Settings, CreditCard, Sun, Moon, Monitor, Trophy, Command, ChevronDown } from 'lucide-react';
+import { Bell, Menu, Search, LogOut, ExternalLink, Gift, AlertTriangle, Star, CheckCircle, Check, User, Settings, CreditCard, Sun, Moon, Monitor, Trophy, Command, ChevronDown } from 'lucide-react';
 import { useThemeSync } from '@/hooks/useThemeSync';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -197,17 +197,17 @@ export function Header({ title, onMenuClick }: HeaderProps) {
             <DropdownMenuItem onClick={() => setTheme('light')} className="gap-2">
               <Sun className="h-4 w-4" />
               Claro
-              {theme === 'light' && <span className="ml-auto text-primary">✓</span>}
+              {theme === 'light' && <Check className="ml-auto h-4 w-4 text-primary" />}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme('dark')} className="gap-2">
               <Moon className="h-4 w-4" />
               Escuro
-              {theme === 'dark' && <span className="ml-auto text-primary">✓</span>}
+              {theme === 'dark' && <Check className="ml-auto h-4 w-4 text-primary" />}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme('system')} className="gap-2">
               <Monitor className="h-4 w-4" />
               Sistema
-              {theme === 'system' && <span className="ml-auto text-primary">✓</span>}
+              {theme === 'system' && <Check className="ml-auto h-4 w-4 text-primary" />}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

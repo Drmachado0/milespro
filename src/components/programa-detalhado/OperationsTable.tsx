@@ -253,10 +253,10 @@ export function OperationsDetailTable({ operations, marketPrice }: OperationsTab
                         {formatCurrency(currentValue)}
                       </TableCell>
                       <TableCell className="max-w-[150px] truncate">
-                        {op.origin || '—'}
+                        {op.origin || '-'}
                       </TableCell>
                       <TableCell className="max-w-[150px] truncate text-muted-foreground">
-                        {op.notes || '—'}
+                        {op.notes || '-'}
                       </TableCell>
                     </TableRow>
                   );

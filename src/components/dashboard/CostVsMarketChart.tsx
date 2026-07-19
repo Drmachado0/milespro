@@ -81,12 +81,12 @@ export function CostVsMarketChart() {
         <div className="space-y-1.5 text-sm">
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">Seu Custo:</span>
-            <span className="font-semibold text-primary">{formatCurrency(data.custo)}</span>
+            <span className="font-semibold text-primary font-mono tabular-nums tracking-tight">{formatCurrency(data.custo)}</span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">Mercado:</span>
-            <span className="font-medium">
-              {formatCurrency(data.mercadoCompra)} — {formatCurrency(data.mercadoVenda)}
+            <span className="font-medium font-mono tabular-nums tracking-tight">
+              {formatCurrency(data.mercadoCompra)} a {formatCurrency(data.mercadoVenda)}
             </span>
           </div>
           <div className={cn(
@@ -94,7 +94,7 @@ export function CostVsMarketChart() {
           )}>
             <span className="text-muted-foreground">Diferença:</span>
             <span className={cn(
-              "font-bold flex items-center gap-1",
+              "font-bold flex items-center gap-1 font-mono tabular-nums tracking-tight",
               data.diff < 0 ? "text-success" : data.diff > 0 ? "text-warning" : "text-foreground"
             )}>
               {data.diff < 0 ? <ArrowDownRight className="h-3.5 w-3.5" /> : 
@@ -150,7 +150,7 @@ export function CostVsMarketChart() {
                   </div>
                   Abaixo
                 </div>
-                <p className="text-2xl font-bold text-success">{summary.below}</p>
+                <p className="text-2xl font-bold text-success font-mono tabular-nums tracking-tight">{summary.below}</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">programas</p>
               </div>
               <div className={cn(
@@ -165,13 +165,13 @@ export function CostVsMarketChart() {
                   </div>
                   Acima
                 </div>
-                <p className="text-2xl font-bold text-warning">{summary.above}</p>
+                <p className="text-2xl font-bold text-warning font-mono tabular-nums tracking-tight">{summary.above}</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">programas</p>
               </div>
               <div className="text-center p-3 rounded-xl bg-gradient-to-br from-muted/50 via-muted/30 to-transparent border border-border/50 transition-all duration-300 hover:shadow-md">
                 <p className="text-xs text-muted-foreground mb-1">Média Geral</p>
                 <p className={cn(
-                  "text-2xl font-bold flex items-center justify-center gap-1",
+                  "text-2xl font-bold flex items-center justify-center gap-1 font-mono tabular-nums tracking-tight",
                   summary.avgDiff < 0 ? "text-success" : summary.avgDiff > 0 ? "text-warning" : "text-foreground"
                 )}>
                   {summary.avgDiff < 0 ? <ArrowDownRight className="h-4 w-4" /> : 

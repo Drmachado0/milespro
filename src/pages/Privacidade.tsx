@@ -44,7 +44,7 @@ export default function Privacidade() {
             O MilesPro é uma plataforma brasileira de gestão de milhas e pontos de
             fidelidade. Esta política descreve como coletamos, usamos, armazenamos e
             protegemos os dados pessoais dos nossos usuários, em conformidade com a Lei
-            Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).
+            Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).
           </p>
 
           <h2>2. Quais dados coletamos</h2>
@@ -57,11 +57,11 @@ export default function Privacidade() {
               compra/venda/transferência, cartões cadastrados (apenas apelido e últimos
               dígitos), notas;</li>
             <li><strong>Dados de pagamento:</strong> processados diretamente pela Asaas
-              (gateway brasileiro certificado PCI DSS) — o MilesPro não armazena números
+              (gateway brasileiro certificado PCI DSS); o MilesPro não armazena números
               de cartão de crédito;</li>
             <li><strong>Dados técnicos:</strong> IP, navegador, sistema operacional,
               eventos de uso agregados e anonimizados via PostHog Cloud EU
-              (<strong>opt-in</strong> via banner de consentimento — desativado por padrão).</li>
+              (<strong>opt-in</strong> via banner de consentimento, desativado por padrão).</li>
           </ul>
           <p>
             <strong>O MilesPro nunca coleta senhas dos programas de fidelidade.</strong> Saldos
@@ -83,11 +83,11 @@ export default function Privacidade() {
 
           <h2>4. Base legal (LGPD art. 7º)</h2>
           <ul>
-            <li><strong>Execução de contrato</strong> — para prover o Serviço contratado;</li>
-            <li><strong>Consentimento</strong> — para analytics agregado e comunicações
+            <li><strong>Execução de contrato</strong>: para prover o Serviço contratado;</li>
+            <li><strong>Consentimento</strong>: para analytics agregado e comunicações
               de marketing (sempre com opt-out disponível);</li>
-            <li><strong>Obrigação legal</strong> — para dados fiscais e contábeis;</li>
-            <li><strong>Legítimo interesse</strong> — para prevenção a fraudes e
+            <li><strong>Obrigação legal</strong>: para dados fiscais e contábeis;</li>
+            <li><strong>Legítimo interesse</strong>: para prevenção a fraudes e
               monitoramento de erros (Sentry com PII removida antes do envio).</li>
           </ul>
 
@@ -97,20 +97,20 @@ export default function Privacidade() {
             necessários para operar o Serviço:
           </p>
           <ul>
-            <li><strong>Lovable Cloud (Supabase managed)</strong> — banco de dados,
+            <li><strong>Lovable Cloud (Supabase managed)</strong>: banco de dados,
               autenticação e edge functions (região: us-east-1, vide §10 Transferência
               Internacional);</li>
-            <li><strong>Asaas</strong> — processamento de pagamentos e emissão de NFS-e
+            <li><strong>Asaas</strong>: processamento de pagamentos e emissão de NFS-e
               (BR, gateway certificado PCI DSS);</li>
-            <li><strong>PostHog Cloud EU</strong> — product analytics agregado
+            <li><strong>PostHog Cloud EU</strong>: product analytics agregado
               (<strong>opt-in</strong> via banner de consentimento);</li>
-            <li><strong>Sentry</strong> — monitoramento de erros (com PII removida antes
+            <li><strong>Sentry</strong>: monitoramento de erros (com PII removida antes
               do envio: CPF e email são redatados via beforeSend regex);</li>
-            <li><strong>Resend</strong> — entrega de emails transacionais (boas-vindas,
+            <li><strong>Resend</strong>: entrega de emails transacionais (boas-vindas,
               recuperação de senha, recibos, comunicações DPO);</li>
-            <li><strong>Crisp</strong> — helpdesk live-chat (armazena histórico de chat
+            <li><strong>Crisp</strong>: helpdesk live-chat (armazena histórico de chat
               na União Europeia);</li>
-            <li><strong>Google Calendar API</strong> — somente se o usuário do módulo
+            <li><strong>Google Calendar API</strong>: somente se o usuário do módulo
               Multi-CPF optar por sincronizar sua agenda.</li>
           </ul>
 
@@ -118,7 +118,7 @@ export default function Privacidade() {
           <ul>
             <li>Criptografia SSL 256-bit em trânsito;</li>
             <li>Criptografia em repouso no banco de dados;</li>
-            <li>Row Level Security (RLS) — cada usuário vê apenas seus próprios dados;</li>
+            <li>Row Level Security (RLS): cada usuário vê apenas seus próprios dados;</li>
             <li>Hashing de senhas com algoritmos padrão de mercado;</li>
             <li>Acesso administrativo restrito e auditado.</li>
           </ul>
@@ -128,13 +128,13 @@ export default function Privacidade() {
           <ul>
             <li>Confirmação da existência de tratamento;</li>
             <li>Acesso aos seus dados (exportação JSON disponível via endpoint
-              auto-serviço — máximo 1 export por hora);</li>
+              auto-serviço, máximo 1 export por hora);</li>
             <li>Correção de dados incompletos, inexatos ou desatualizados;</li>
             <li>Anonimização, bloqueio ou eliminação de dados desnecessários ou tratados
               em desconformidade;</li>
             <li>Portabilidade dos dados;</li>
             <li>Eliminação dos dados tratados com base em consentimento (com janela de
-              7 dias para cancelamento da exclusão — vide §8);</li>
+              7 dias para cancelamento da exclusão, vide §8);</li>
             <li>Informação sobre entidades com quem seus dados foram compartilhados;</li>
             <li>Revogação do consentimento.</li>
           </ul>
@@ -155,7 +155,7 @@ export default function Privacidade() {
             <li>Você solicita a exclusão na área de Configurações;</li>
             <li>Recebe email de confirmação (link válido por 24 horas);</li>
             <li>Ao confirmar, inicia-se uma <strong>janela de 7 dias para
-              cancelamento</strong> — você pode escrever para
+              cancelamento</strong>, você pode escrever para
               {' '}<a href="mailto:dpo@milespro.net.br" className="text-primary underline">dpo@milespro.net.br</a>{' '}
               dentro do prazo para reverter;</li>
             <li>Após o 7º dia, um processo automático diário (04:00 UTC) executa a
@@ -171,7 +171,7 @@ export default function Privacidade() {
           <p>
             Utilizamos cookies essenciais para manter sua sessão ativa. Para analytics
             (PostHog) e marketing por email, pedimos consentimento granular via banner
-            (LGPD art. 8 §4 — checkboxes separadas, nunca pré-marcadas). Você pode
+            (LGPD art. 8 §4: checkboxes separadas, nunca pré-marcadas). Você pode
             desabilitar cookies nas configurações do seu navegador, mas algumas
             funcionalidades podem deixar de funcionar corretamente.
           </p>
@@ -185,7 +185,7 @@ export default function Privacidade() {
           <p>
             Para transferências BR→US (Supabase/Lovable Cloud, Sentry, Resend),
             aplicamos as <strong>Cláusulas Contratuais Padrão (Standard Contractual
-            Clauses — SCC)</strong> conforme orientação da ANPD para transferências
+            Clauses, SCC)</strong> conforme orientação da ANPD para transferências
             internacionais sob LGPD art. 33. O nível de proteção das suas informações
             é equivalente ao garantido pela LGPD.
           </p>

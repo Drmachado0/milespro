@@ -274,7 +274,7 @@ export default function Compra() {
                   {quantityNumber > 0 && totalCostNumber === 0 && (
                     <p className="text-xs text-warning flex items-center gap-1">
                       <AlertCircle className="h-3 w-3" />
-                      Custo zero será registrado como cortesia/bônus — quebra o custo médio do programa
+                      Custo zero será registrado como cortesia/bônus: quebra o custo médio do programa
                     </p>
                   )}
                 </div>

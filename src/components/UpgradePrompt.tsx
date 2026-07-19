@@ -1,7 +1,7 @@
 ﻿import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Zap, Crown, Star, ArrowRight } from 'lucide-react';
+import { Zap, Crown, Star, ArrowRight, Check } from 'lucide-react';
 import { useSubscription } from '@/hooks/useSubscription';
 
 interface UpgradePromptProps {
@@ -49,19 +49,19 @@ export function UpgradePrompt({
   const getFeaturesList = () => {
     if (targetPlan === 'vip' || plan === 'pro') {
       return [
-        '✓ Até 5 perfis (família ou clientes)',
-        '✓ Login individual para cada membro',
-        '✓ Dashboards focados em lucro',
-        '✓ Relatórios com exportação CSV/Excel',
-        '✓ Suporte prioritário via WhatsApp',
+        'Até 5 perfis (família ou clientes)',
+        'Login individual para cada membro',
+        'Dashboards focados em lucro',
+        'Relatórios com exportação CSV/Excel',
+        'Suporte prioritário via WhatsApp',
       ];
     }
     return [
-      '✓ Operações ilimitadas',
-      '✓ 70+ programas de fidelidade',
-      '✓ Simuladores e projeções',
-      '✓ Alertas completos de vencimento',
-      '✓ Suporte por e-mail em 24h',
+      'Operações ilimitadas',
+      '70+ programas de fidelidade',
+      'Simuladores e projeções',
+      'Alertas completos de vencimento',
+      'Suporte por e-mail em 24h',
     ];
   };
 
@@ -85,7 +85,10 @@ export function UpgradePrompt({
           </div>
           <ul className="text-sm text-muted-foreground space-y-1 ml-8">
             {getFeaturesList().map((feature, i) => (
-              <li key={i}>{feature}</li>
+              <li key={i} className="flex items-start gap-1.5">
+                <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <span>{feature}</span>
+              </li>
             ))}
           </ul>
         </div>

@@ -5,8 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { 
-  Calculator, Monitor, Crown, Check, Star, Zap, Quote, ArrowRight, X, Shield, Lock, Smartphone, Users, ChevronLeft, ChevronRight, Clock
+import {
+  Calculator, Monitor, Crown, Check, Star, Zap, Quote, ArrowRight, X, Shield, Lock, Smartphone, Users, ChevronLeft, ChevronRight, Clock, Heart
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { OptimizedImage } from '@/components/ui/optimized-image';
@@ -606,8 +606,9 @@ export const PricingSection = ({
               }`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-primary text-primary-foreground text-xs font-medium px-4 py-1.5 rounded-full shadow-lg">
-                      ⭐ Mais escolhido
+                    <span className="bg-primary text-primary-foreground text-xs font-medium px-4 py-1.5 rounded-full shadow-lg inline-flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-current" />
+                      Mais escolhido
                     </span>
                   </div>
                 )}
@@ -1041,9 +1042,16 @@ export const CTASection = () => {
             Criar Conta Grátis
             <ArrowRight className="w-4 h-4" />
           </Button>
-          <p className="text-sm text-muted-foreground mt-4">
-            ✓ Usuários economizam em média R$ 3.000 por viagem &nbsp; ✓ Sem cartão de crédito
-          </p>
+          <div className="text-sm text-muted-foreground mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span className="inline-flex items-center gap-1.5">
+              <Check className="w-4 h-4 text-success shrink-0" />
+              Usuários economizam em média R$ 3.000 por viagem
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Check className="w-4 h-4 text-success shrink-0" />
+              Sem cartão de crédito
+            </span>
+          </div>
         </FadeInSection>
       </div>
     </section>
@@ -1234,7 +1242,7 @@ export const FooterSection = () => {
         <div className="border-t border-slate-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
             <p>© {new Date().getFullYear()} MilesPro. Todos os direitos reservados.</p>
-            <p>Feito com ❤️ no Brasil para viajantes inteligentes</p>
+            <p className="flex items-center gap-1.5">Feito com <Heart className="w-3.5 h-3.5 fill-current text-primary" /> no Brasil para viajantes inteligentes</p>
           </div>
         </div>
       </div>

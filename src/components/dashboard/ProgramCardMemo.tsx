@@ -67,7 +67,7 @@ function ProgramCardBase({ program, marketPrice }: ProgramCardProps) {
         
         <div className="space-y-2 sm:space-y-3">
           <div className="p-2 sm:p-3 rounded-lg bg-muted/30">
-            <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
+            <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground font-mono tabular-nums tracking-tight">
               {formatNumber(program.balance)}
             </p>
             <p className="text-[10px] sm:text-xs text-muted-foreground">milhas disponíveis</p>
@@ -76,7 +76,7 @@ function ProgramCardBase({ program, marketPrice }: ProgramCardProps) {
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
             <div className="p-1.5 sm:p-2 rounded-lg bg-muted/20">
               <span className="text-[9px] sm:text-xs text-muted-foreground block mb-0.5">Valor estimado</span>
-              <span className="font-semibold text-foreground text-xs sm:text-sm truncate block">
+              <span className="font-semibold text-foreground text-xs sm:text-sm truncate block font-mono tabular-nums tracking-tight">
                 {formatCurrency(estimatedValue)}
               </span>
             </div>
@@ -93,7 +93,7 @@ function ProgramCardBase({ program, marketPrice }: ProgramCardProps) {
                 {costTrend === 'bad' && <TrendingUp className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-destructive" />}
               </span>
               <span className={cn(
-                'font-semibold text-xs sm:text-sm truncate block',
+                'font-semibold text-xs sm:text-sm truncate block font-mono tabular-nums tracking-tight',
                 costTrend === 'good' && 'text-success dark:text-success',
                 costTrend === 'bad' && 'text-destructive',
                 costTrend === 'neutral' && 'text-foreground'

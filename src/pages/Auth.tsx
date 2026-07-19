@@ -383,7 +383,14 @@ export default function Auth() {
   // Formulário de reset de senha
   if (isResetMode) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="mp-app-shell relative min-h-screen overflow-hidden flex items-center justify-center p-4">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: 'radial-gradient(55% 50% at 50% 35%, hsl(var(--primary) / 0.16) 0%, hsl(330 100% 56% / 0.05) 45%, transparent 70%)',
+          }}
+        />
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
@@ -449,7 +456,14 @@ export default function Auth() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="mp-app-shell relative min-h-screen overflow-hidden flex items-center justify-center p-4">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: 'radial-gradient(55% 50% at 50% 35%, hsl(var(--primary) / 0.16) 0%, hsl(330 100% 56% / 0.05) 45%, transparent 70%)',
+        }}
+      />
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">

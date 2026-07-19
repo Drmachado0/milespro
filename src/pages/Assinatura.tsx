@@ -71,7 +71,7 @@ const plans = [
       'Histórico de 30 dias',
     ], 
     popular: false,
-    note: 'Sem compromisso — comece hoje',
+    note: 'Sem compromisso, comece hoje',
   },
   {
     // Plan 02 D-01: legacy mid-tier id -> canonical 'pro' id.
@@ -145,7 +145,7 @@ const faqs = [
   },
   {
     question: 'Qual a diferença entre Pro e VIP?',
-    answer: 'O Pro é para viajantes individuais que querem controle total das suas milhas. O VIP suporta até 5 perfis (família ou clientes) com login individual, dashboards focados em lucro e suporte prioritário via WhatsApp — ideal para quem gerencia milhas profissionalmente.'
+    answer: 'O Pro é para viajantes individuais que querem controle total das suas milhas. O VIP suporta até 5 perfis (família ou clientes) com login individual, dashboards focados em lucro e suporte prioritário via WhatsApp. Ideal para quem gerencia milhas profissionalmente.'
   },
   {
     question: 'Posso adicionar mais usuários depois?',
@@ -153,7 +153,7 @@ const faqs = [
   },
   {
     question: 'Como funciona a garantia?',
-    answer: 'Você pode usar o plano Gratuito por tempo ilimitado. Também oferecemos 7 dias de garantia incondicional nos planos pagos: se não gostar, devolvemos integralmente o valor da primeira cobrança — sem perguntas, sem burocracia. Veja os Termos de Uso (seção Garantia) para detalhes.'
+    answer: 'Você pode usar o plano Gratuito por tempo ilimitado. Também oferecemos 7 dias de garantia incondicional nos planos pagos: se não gostar, devolvemos integralmente o valor da primeira cobrança, sem perguntas, sem burocracia. Veja os Termos de Uso (seção Garantia) para detalhes.'
   },
   {
     question: 'Quanto tempo demora para confirmar o pagamento?',
@@ -702,7 +702,7 @@ export default function Assinatura() {
                       </Button>
                       {plan.monthlyPrice > 0 && !isPlanCtaDisabled(plan) && (
                         <p className="text-xs text-center text-muted-foreground leading-relaxed">
-                          Pagamento processado pela Asaas — Pix, cartão ou boleto.
+                          Pagamento processado pela Asaas: Pix, cartão ou boleto.
                         </p>
                       )}
                       {/* Plan 02-04 (W1c) — D-19 guarantee + HIGH-02 Pix/boleto delay */}

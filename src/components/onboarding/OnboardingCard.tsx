@@ -84,8 +84,9 @@ export const OnboardingCard = memo(function OnboardingCard() {
                   <PartyPopper className="w-10 h-10 text-success" />
                 </motion.div>
                 <div>
-                  <h3 className="text-lg font-semibold text-success dark:text-success">
-                    configuração completa! 🎉
+                  <h3 className="text-lg font-semibold text-success dark:text-success flex items-center gap-1.5">
+                    configuração completa!
+                    <PartyPopper className="w-4 h-4" />
                   </h3>
                   <p className="text-sm text-success/80 dark:text-success/80">
                     Seu MilesPro está pronto. Você está no caminho certo!

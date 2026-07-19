@@ -13,7 +13,7 @@ const values = [
     icon: Target,
     title: 'Clareza antes de economia',
     description:
-      'Milha é moeda — e toda moeda tem câmbio. Acreditamos que o primeiro passo pra economizar de verdade é entender o que seus pontos valem.',
+      'Milha é moeda, e toda moeda tem câmbio. Acreditamos que o primeiro passo pra economizar de verdade é entender o que seus pontos valem.',
   },
   {
     icon: Users,
@@ -53,7 +53,7 @@ export default function Sobre() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Somos a plataforma brasileira de gestão de milhas e pontos pensada para quem
-            trata viagem como investimento — não como loteria.
+            trata viagem como investimento, não como loteria.
           </p>
         </header>
 
@@ -62,7 +62,7 @@ export default function Sobre() {
           <p className="text-muted-foreground leading-relaxed">
             Brasileiros perdem mais de <strong>R$ 2,3 bilhões por ano</strong> em milhas que
             vencem sem aviso. E pagam passagem até 75% mais cara por não saber quando usar
-            seus pontos. O MilesPro existe pra mudar essa conta — de forma prática, direta
+            seus pontos. O MilesPro existe pra mudar essa conta, de forma prática, direta
             e sem jargão.
           </p>
 
@@ -72,7 +72,7 @@ export default function Sobre() {
             Azul Fidelidade, LatamPass, TAP, Marriott, Hilton, Accor e dezenas de outros) num
             único dashboard. Calculamos em segundos se vale mais usar milha ou pagar em dinheiro.
             Avisamos antes dos seus pontos vencerem. Organizamos tudo para o Imposto de Renda.
-            E, para agentes de viagens, incluímos um ERP completo — clientes, passagens, hotéis,
+            E, para agentes de viagens, incluímos um ERP completo: clientes, passagens, hotéis,
             cruzeiros, orçamentos e financeiro.
           </p>
 

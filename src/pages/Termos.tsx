@@ -122,7 +122,7 @@ export default function Termos() {
           <p>
             O código, marca, interface e conteúdo produzido pelo MilesPro são de
             propriedade exclusiva da empresa. Os dados inseridos pelo usuário permanecem
-            de sua propriedade — o MilesPro atua apenas como processador/operador conforme
+            de sua propriedade; o MilesPro atua apenas como processador/operador conforme
             a LGPD.
           </p>
 

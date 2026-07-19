@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, X, ArrowRight } from 'lucide-react';
+import { FileText, X, ArrowRight, ClipboardList } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -69,7 +69,8 @@ export function IRReportBanner() {
           {/* Content */}
           <div className="flex-1 space-y-1">
             <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-              📋 Relatório para Imposto de Renda
+              <ClipboardList className="h-5 w-5 shrink-0" />
+              Relatório para Imposto de Renda
             </h3>
             <p className="text-sm sm:text-base text-white/90">
               Gere seu relatório com todos os dados de compra e venda de milhas para sua declaração de IR {currentYear}.

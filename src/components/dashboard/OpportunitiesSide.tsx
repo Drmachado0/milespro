@@ -1,6 +1,6 @@
 ﻿import { memo, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Plus } from 'lucide-react';
+import { ArrowUpRight, Plus, Star } from 'lucide-react';
 import { useProgramBalances } from '@/hooks/useProgramBalances';
 import { useMarketPrices } from '@/hooks/useMarketPrices';
 import { useLocalization } from '@/hooks/useLocalization';
@@ -200,8 +200,8 @@ function OpportunityCard({
       onClick={() => opp.cta && onCtaClick(opp.cta.path)}
     >
       {featured && (
-        <div className="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-gradient-to-r from-warning to-primary text-[10px] font-bold text-white shadow-sm animate-pulse">
-          ⭐ Destaque
+        <div className="absolute -top-2 -left-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-warning to-primary text-[10px] font-bold text-white shadow-sm animate-pulse">
+          <Star className="h-2.5 w-2.5 fill-current" /> Destaque
         </div>
       )}
       <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.06em]">

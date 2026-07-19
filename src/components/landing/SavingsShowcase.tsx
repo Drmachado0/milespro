@@ -94,7 +94,7 @@ export const SavingsShowcase = () => {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Savings badge */}
-                <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-[11px] font-bold font-mono tabular-nums px-3 py-1 rounded-full shadow-lg">
+                <div className="absolute -top-3 -right-3 bg-success text-success-foreground text-[11px] font-bold font-mono tabular-nums px-3 py-1 rounded-full shadow-lg">
                   −{savingsPercent}%
                 </div>
 
@@ -119,7 +119,7 @@ export const SavingsShowcase = () => {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-foreground font-medium">Com milhas:</span>
-                    <span className="text-emerald-500 font-bold text-lg font-mono tabular-nums">
+                    <span className="text-success font-bold text-lg font-mono tabular-nums">
                       {formatCurrency(example.milesPrice)}
                     </span>
                   </div>
@@ -129,7 +129,7 @@ export const SavingsShowcase = () => {
                 <div className="mt-4 pt-3 border-t border-border">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-semibold tracking-[0.14em] uppercase text-muted-foreground">Economia</span>
-                    <span className="text-emerald-500 font-bold font-mono tabular-nums">
+                    <span className="text-success font-bold font-mono tabular-nums">
                       {formatCurrency(savings)}
                     </span>
                   </div>

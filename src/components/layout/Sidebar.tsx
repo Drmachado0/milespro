@@ -399,7 +399,7 @@ export function Sidebar({ className, isMobile = false }: SidebarProps) {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-md shadow-primary/20">
                 <Plane className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent font-extrabold text-lg tracking-tight">MilesPro</span>
+              <span className="bg-gradient-hero bg-clip-text text-transparent font-extrabold text-lg tracking-tight">MilesPro</span>
             </div>
           )}
           {collapsed && (

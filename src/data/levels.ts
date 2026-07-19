@@ -33,7 +33,7 @@ export const LEVELS: UserLevel[] = [
     minPoints: 200, 
     icon: Target, 
     color: 'green',
-    gradient: 'from-success to-success'
+    gradient: 'from-success to-success/80'
   },
   { 
     level: 3, 
@@ -41,7 +41,7 @@ export const LEVELS: UserLevel[] = [
     minPoints: 500, 
     icon: Flame, 
     color: 'blue',
-    gradient: 'from-info to-info'
+    gradient: 'from-info to-info/80'
   },
   { 
     level: 4, 
@@ -57,7 +57,7 @@ export const LEVELS: UserLevel[] = [
     minPoints: 2000, 
     icon: Crown, 
     color: 'orange',
-    gradient: 'from-primary to-primary'
+    gradient: 'from-primary to-primary/80'
   },
   { 
     level: 6, 
@@ -65,7 +65,7 @@ export const LEVELS: UserLevel[] = [
     minPoints: 3500, 
     icon: Star, 
     color: 'amber',
-    gradient: 'from-warning to-warning'
+    gradient: 'from-warning to-warning/80'
   },
   { 
     level: 7, 

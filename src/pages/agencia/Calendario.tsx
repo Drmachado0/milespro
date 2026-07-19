@@ -306,7 +306,7 @@ export default function Calendario() {
         {!isLoading && !hasEventsThisMonth && hasAnyEvents && (
           <Card className="p-3 border-dashed bg-muted/20">
             <p className="text-xs text-muted-foreground">
-              Nenhum evento em {format(currentMonth, 'MMMM yyyy', { locale: ptBR })} — use as setas acima para navegar.
+              Nenhum evento em {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}. Use as setas acima para navegar.
             </p>
           </Card>
         )}

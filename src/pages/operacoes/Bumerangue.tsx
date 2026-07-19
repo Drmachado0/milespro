@@ -181,7 +181,7 @@ export default function Bumerangue() {
           eyebrow="Operação"
           icon={<RefreshCw className="h-5 w-5" />}
           title="Promoção Bumerangue"
-          subtitle="Comprar e revender milhas aproveitando promoção — lucro imediato"
+          subtitle="Comprar e revender milhas aproveitando promoção, com lucro imediato"
         />
 
         {/* Explicação da mecânica */}

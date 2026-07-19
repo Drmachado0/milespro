@@ -113,7 +113,7 @@ export function CreateManagedAccountDialog({
           <DialogTitle>Adicionar conta gerenciada</DialogTitle>
           <DialogDescription>
             Cadastre um novo CPF que você quer gerenciar dentro do seu MilesPro VIP.
-            Esse perfil pode ter seus próprios programas, saldos e relatórios — você
+            Esse perfil pode ter seus próprios programas, saldos e relatórios. Você
             controla tudo de um único painel.
           </DialogDescription>
         </DialogHeader>
@@ -151,7 +151,7 @@ export function CreateManagedAccountDialog({
               onChange={(e) => setCpfMasked(formatCpfMask(e.target.value))}
             />
             <p className="text-xs text-muted-foreground">
-              Usamos o CPF apenas para identificar o titular do perfil — não fazemos
+              Usamos o CPF apenas para identificar o titular do perfil. Não fazemos
               consultas externas.
             </p>
           </div>

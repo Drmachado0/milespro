@@ -240,7 +240,7 @@ export function PriceAlertsCard() {
                       {marketPrice && (
                         <p className="text-[10px] text-muted-foreground mt-1">
                           Atual: <span className="font-medium text-foreground">{formatCurrency(marketPrice.buy_price)}</span>
-                          <span className="mx-1">—</span>
+                          <span className="mx-1">a</span>
                           <span className="font-medium text-foreground">{formatCurrency(marketPrice.sell_price)}</span>
                         </p>
                       )}

@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calculator, TrendingUp, TrendingDown, Percent, DollarSign, BookOpen, ChevronDown } from 'lucide-react';
+import { Calculator, TrendingUp, TrendingDown, Percent, DollarSign, BookOpen, ChevronDown, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLocalization } from '@/hooks/useLocalization';
 import { SimulatorDescription } from './SimulatorDescription';
@@ -229,15 +229,25 @@ export function ROISimulator() {
             : 'bg-warning/5 border-warning/20'
         )}>
           <p className={cn(
-            'text-sm font-medium',
+            'text-sm font-medium flex items-start gap-1.5',
             simulation.isProfitable ? 'text-success dark:text-success' : 'text-warning dark:text-warning'
           )}>
-            {simulation.isProfitable 
-              ? `✅ Operação lucrativa! ROI de ${simulation.roi.toFixed(1)}% com lucro de ${formatCurrency(simulation.profit)}.`
-              : simulation.profit === 0
-                ? `⚠️ Operação no zero-a-zero. Sem lucro nem prejuízo.`
-                : `❌ Operação com prejuízo de ${formatCurrency(Math.abs(simulation.profit))}. Considere ajustar os valores.`
-            }
+            {simulation.isProfitable ? (
+              <>
+                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>Operação lucrativa! ROI de {simulation.roi.toFixed(1)}% com lucro de {formatCurrency(simulation.profit)}.</span>
+              </>
+            ) : simulation.profit === 0 ? (
+              <>
+                <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>Operação no zero-a-zero. Sem lucro nem prejuízo.</span>
+              </>
+            ) : (
+              <>
+                <XCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>Operação com prejuízo de {formatCurrency(Math.abs(simulation.profit))}. Considere ajustar os valores.</span>
+              </>
+            )}
           </p>
         </div>
 
@@ -274,12 +284,12 @@ Custo Efetivo/Mil = Custo Total / (Milhas Efetivas / 1.000)`}
               <div className="space-y-2">
                 <p className="text-xs font-semibold text-foreground">2. Critérios de interpretação</p>
                 <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
-                  <li><strong className="text-success">ROI &gt; 30%</strong>: excelente — operação altamente recomendada.</li>
-                  <li><strong className="text-foreground">ROI 15–30%</strong>: saudável — operação típica de revenda.</li>
-                  <li><strong className="text-warning">ROI 0–15%</strong>: marginal — avaliar tempo de capital empatado e risco.</li>
-                  <li><strong className="text-destructive">ROI &lt; 0%</strong>: prejuízo — não executar sem razão estratégica (ex.: status, expiração).</li>
+                  <li><strong className="text-success">ROI &gt; 30%</strong>: excelente, operação altamente recomendada.</li>
+                  <li><strong className="text-foreground">ROI 15–30%</strong>: saudável, operação típica de revenda.</li>
+                  <li><strong className="text-warning">ROI 0–15%</strong>: marginal, avaliar tempo de capital empatado e risco.</li>
+                  <li><strong className="text-destructive">ROI &lt; 0%</strong>: prejuízo, não executar sem razão estratégica (ex.: status, expiração).</li>
                   <li><strong className="text-foreground">Margem</strong>: complementa o ROI mostrando eficiência sobre a receita.</li>
-                  <li><strong className="text-foreground">Custo Efetivo/Milheiro</strong>: o CPM real após bônus — compare ao "valor de resgate" do programa.</li>
+                  <li><strong className="text-foreground">Custo Efetivo/Milheiro</strong>: o CPM real após bônus. Compare ao "valor de resgate" do programa.</li>
                 </ul>
               </div>
 
@@ -289,7 +299,7 @@ Custo Efetivo/Mil = Custo Total / (Milhas Efetivas / 1.000)`}
                   <li>Não considera <strong>impostos</strong>, <strong>taxas de transferência</strong> nem <strong>custo de oportunidade</strong> do capital.</li>
                   <li>Não considera o <strong>tempo</strong> entre compra e venda (milhas paradas têm custo financeiro).</li>
                   <li>Bônus é tratado como <strong>acréscimo direto</strong> à quantidade (modelo multiplicativo simples).</li>
-                  <li>Preço de venda é considerado <strong>líquido</strong> — descontos de marketplace devem ser abatidos antes de informar o valor.</li>
+                  <li>Preço de venda é considerado <strong>líquido</strong>: descontos de marketplace devem ser abatidos antes de informar o valor.</li>
                 </ul>
               </div>
 

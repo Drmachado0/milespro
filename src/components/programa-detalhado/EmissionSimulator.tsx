@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plane, TrendingUp, TrendingDown } from 'lucide-react';
+import { Plane, TrendingUp, TrendingDown, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { useLocalization } from '@/hooks/useLocalization';
 import { cn } from '@/lib/utils';
 import { SimulatorDescription } from '@/components/simulator/SimulatorDescription';
@@ -94,8 +94,18 @@ export function EmissionSimulator() {
           </div>
         </div>
         <div className={cn('p-4 rounded-lg border', simulation.isWorthIt ? 'bg-success/5 border-success/20' : 'bg-warning/5 border-warning/20')}>
-          <p className={cn('text-sm font-medium', simulation.isWorthIt ? 'text-success' : 'text-warning')}>
-            {simulation.isWorthIt ? `✅ Vale a pena! Você economiza ${formatCurrency(simulation.savings)} em relação à compra em dinheiro.` : `⚠️ Comprar a passagem em dinheiro pode ser mais vantajoso neste caso.`}
+          <p className={cn('text-sm font-medium flex items-start gap-1.5', simulation.isWorthIt ? 'text-success' : 'text-warning')}>
+            {simulation.isWorthIt ? (
+              <>
+                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>Vale a pena! Você economiza {formatCurrency(simulation.savings)} em relação à compra em dinheiro.</span>
+              </>
+            ) : (
+              <>
+                <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>Comprar a passagem em dinheiro pode ser mais vantajoso neste caso.</span>
+              </>
+            )}
           </p>
         </div>
       </CardContent>

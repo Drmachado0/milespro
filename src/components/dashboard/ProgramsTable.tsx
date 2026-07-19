@@ -235,7 +235,7 @@ function DesktopRow({
       </div>
       <div className="text-right">
         <div className="font-mono text-sm tabular-nums">
-          {row.averageCost > 0 ? `${formatCurrency(row.averageCost)}/mil` : '—'}
+          {row.averageCost > 0 ? `${formatCurrency(row.averageCost)}/mil` : '-'}
         </div>
       </div>
       <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
@@ -273,7 +273,7 @@ function MobileRow({
         <div className="mt-1 flex items-baseline justify-between text-[11px] text-muted-foreground">
           <span className="font-mono tabular-nums">{formatCurrency(row.estimatedBrl)}</span>
           <span className="font-mono tabular-nums">
-            {totalMiles > 0 ? `${row.allocation.toFixed(1)}%` : '—'}
+            {totalMiles > 0 ? `${row.allocation.toFixed(1)}%` : '-'}
           </span>
         </div>
       </div>

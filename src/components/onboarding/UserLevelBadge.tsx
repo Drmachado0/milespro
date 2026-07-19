@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { getUserLevel, getNextLevel, getLevelProgress } from '@/data/levels';
 
@@ -84,7 +85,7 @@ export const UserLevelBadge = memo(function UserLevelBadge({
       
       {!nextLevel && (
         <div className="flex items-center gap-1 text-xs text-primary">
-          <span>✨</span>
+          <Sparkles className="w-3.5 h-3.5" />
           <span>Nível máximo alcançado!</span>
         </div>
       )}

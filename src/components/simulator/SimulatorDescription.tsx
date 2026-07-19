@@ -1,4 +1,4 @@
-import { HelpCircle } from 'lucide-react';
+import { HelpCircle, Lightbulb } from 'lucide-react';
 import {
   Collapsible,
   CollapsibleContent,
@@ -48,7 +48,10 @@ export function SimulatorDescription({ title, description, steps, tips }: Simula
           
           {tips && tips.length > 0 && (
             <div className="space-y-1.5">
-              <p className="text-xs font-medium text-foreground">💡 Dicas:</p>
+              <p className="text-xs font-medium text-foreground flex items-center gap-1.5">
+                <Lightbulb className="h-3.5 w-3.5" />
+                Dicas:
+              </p>
               <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
                 {tips.map((tip, index) => (
                   <li key={index}>{tip}</li>

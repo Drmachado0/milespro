@@ -1,4 +1,4 @@
-﻿import { X, ArrowRight } from 'lucide-react';
+﻿import { X, ArrowRight, Rocket } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ export const PromoTopBanner = () => {
 
       {/* Main content */}
       <div className="flex items-center justify-center gap-2 flex-wrap">
-        <span className="font-medium">🚀 Oferta fundadora: comece grátis e evolua para Plus quando suas milhas já estiverem organizadas</span>
+        <span className="font-medium inline-flex items-center gap-1.5"><Rocket className="w-4 h-4 shrink-0" /> Oferta fundadora: comece grátis e evolua para Plus quando suas milhas já estiverem organizadas</span>
         <button
           onClick={() => navigate('/auth')}
           className="inline-flex items-center gap-1 font-semibold hover:underline transition-all hover:gap-1.5"

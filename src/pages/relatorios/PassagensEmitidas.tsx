@@ -357,14 +357,14 @@ export default function PassagensEmitidas() {
           <KPICard
             size="sm"
             label="Emissões"
-            value={isLoading ? '—' : formatNumber(summary.totalEmissions)}
+            value={isLoading ? '-' : formatNumber(summary.totalEmissions)}
             icon={<Plane className="h-5 w-5 text-primary" />}
           />
           <KPICard
             size="sm"
             accent="info"
             label="Milhas Usadas"
-            value={isLoading ? '—' : formatNumber(summary.totalMilesUsed)}
+            value={isLoading ? '-' : formatNumber(summary.totalMilesUsed)}
             icon={<Ticket className="h-5 w-5" />}
           />
           <KPICard
@@ -372,7 +372,7 @@ export default function PassagensEmitidas() {
             accent="success"
             label="Economia"
             value={
-              isLoading ? '—' : (
+              isLoading ? '-' : (
                 <span className={summary.totalSavings >= 0 ? 'text-success' : 'text-destructive'}>
                   {formatCurrency(summary.totalSavings)}
                 </span>
@@ -384,14 +384,14 @@ export default function PassagensEmitidas() {
             size="sm"
             accent="violet"
             label="Passageiros"
-            value={isLoading ? '—' : formatNumber(summary.totalPassengers)}
+            value={isLoading ? '-' : formatNumber(summary.totalPassengers)}
             icon={<Users className="h-5 w-5" />}
           />
           <KPICard
             size="sm"
             accent="warning"
             label="Total Taxas"
-            value={isLoading ? '—' : formatCurrency(summary.totalTaxes)}
+            value={isLoading ? '-' : formatCurrency(summary.totalTaxes)}
             icon={<Wallet className="h-5 w-5" />}
           />
           <KPICard
@@ -399,7 +399,7 @@ export default function PassagensEmitidas() {
             accent="danger"
             label="% Economia"
             value={
-              isLoading ? '—' : (
+              isLoading ? '-' : (
                 <span className={summary.averageSavingsPercentage >= 0 ? 'text-success' : 'text-destructive'}>
                   {formatNumber(summary.averageSavingsPercentage, 1)}%
                 </span>

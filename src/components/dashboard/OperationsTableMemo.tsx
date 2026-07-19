@@ -120,7 +120,7 @@ const OperationCard = memo(function OperationCard({
         <div>
           <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground mb-0.5">Custo</p>
           <p className="text-sm font-mono font-semibold tabular-nums tracking-tight text-foreground">
-            {op.total_cost && op.total_cost > 0 ? formatCurrency(Number(op.total_cost)) : '—'}
+            {op.total_cost && op.total_cost > 0 ? formatCurrency(Number(op.total_cost)) : '-'}
           </p>
         </div>
         <div>
@@ -131,7 +131,7 @@ const OperationCard = memo(function OperationCard({
           )}>
             {op.cost_per_thousand && op.cost_per_thousand > 0
               ? formatCurrency(Number(op.cost_per_thousand))
-              : '—'
+              : '-'
             }
           </p>
         </div>
@@ -196,7 +196,7 @@ const OperationRow = memo(function OperationRow({
       <TableCell className="text-right text-muted-foreground text-xs lg:text-sm hidden sm:table-cell font-mono tabular-nums tracking-tight">
         {op.total_cost && op.total_cost > 0
           ? formatCurrency(Number(op.total_cost))
-          : '—'
+          : '-'
         }
       </TableCell>
       <TableCell className="text-right hidden md:table-cell">
@@ -206,7 +206,7 @@ const OperationRow = memo(function OperationRow({
         )}>
           {op.cost_per_thousand && op.cost_per_thousand > 0
             ? formatCurrency(Number(op.cost_per_thousand))
-            : '—'
+            : '-'
           }
         </span>
       </TableCell>

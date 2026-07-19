@@ -74,7 +74,7 @@ export const BadgeDetailModal = memo(function BadgeDetailModal({
           {/* Points and rarity */}
           <div className="flex items-center gap-3">
             <motion.div
-              className="text-lg font-bold text-primary"
+              className="text-lg font-bold text-primary font-mono tabular-nums tracking-tight"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring' }}

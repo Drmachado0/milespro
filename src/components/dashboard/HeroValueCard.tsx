@@ -1,6 +1,6 @@
 ﻿import { memo, useMemo } from 'react';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, Target } from 'lucide-react';
 import { useProgramBalances } from '@/hooks/useProgramBalances';
 import { useOperations } from '@/hooks/useOperations';
 import { useExpirationAlerts } from '@/hooks/useExpirationAlerts';
@@ -196,7 +196,10 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
       {/* Contextual nudge for new users */}
       {patrimony === 0 && operations.length === 0 && (
         <div className="mt-4 rounded-xl bg-primary/10 border border-primary/20 p-4 text-center">
-          <p className="text-sm font-medium text-primary">🎯 Comece pelo onboarding</p>
+          <p className="text-sm font-medium text-primary flex items-center justify-center gap-1.5">
+            <Target className="h-4 w-4" />
+            Comece pelo onboarding
+          </p>
           <p className="text-xs text-muted-foreground mt-1">
             Complete os passos iniciais para começar a controlar suas milhas
           </p>
@@ -206,24 +209,24 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
       <div className="mt-4 grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4 sm:gap-6">
         <KpiCell
           label="Saldo em milhas"
-          value={totalMiles > 0 ? formatNumber(totalMiles) : '—'}
+          value={totalMiles > 0 ? formatNumber(totalMiles) : '-'}
           sub={null}
         />
         <KpiCell
           label="Custo médio"
-          value={avgCostPerK > 0 ? `${formatCurrency(avgCostPerK)}` : '—'}
+          value={avgCostPerK > 0 ? `${formatCurrency(avgCostPerK)}` : '-'}
           sub={avgCostPerK > 0 ? <span className="text-muted-foreground">/mil</span> : null}
         />
         <KpiCell
           label="Vencendo (90d)"
-          value={totalMiles > 0 ? (totalExpiringMiles > 0 ? formatNumber(totalExpiringMiles) : '0') : '—'}
+          value={totalMiles > 0 ? (totalExpiringMiles > 0 ? formatNumber(totalExpiringMiles) : '0') : '-'}
           sub={<span className="text-muted-foreground">{totalMiles > 0 ? (totalExpiringMiles > 0 ? 'Urgente' : 'Nenhuma urgência') : 'Cadastre saldos'}</span>}
           muted={totalMiles === 0}
           alert={totalExpiringMiles > 0}
         />
         <KpiCell
           label="Total investido"
-          value={totalMiles > 0 ? formatCurrency(totalInvested) : '—'}
+          value={totalMiles > 0 ? formatCurrency(totalInvested) : '-'}
           sub={totalMiles > 0 ? <span className="text-muted-foreground">acumulado</span> : null}
         />
       </div>

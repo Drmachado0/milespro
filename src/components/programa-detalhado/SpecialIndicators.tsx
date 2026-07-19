@@ -86,7 +86,7 @@ export function SpecialIndicators({ iqc, salePotential, economyFromEmissions, ex
         </CardHeader>
         <CardContent>
           <p className={cn('text-2xl font-bold', expiringMiles > 0 ? 'text-warning' : 'text-muted-foreground')}>
-            {expiringMiles > 0 ? formatNumber(expiringMiles) : '—'}
+            {expiringMiles > 0 ? formatNumber(expiringMiles) : '-'}
           </p>
           <p className="text-xs text-muted-foreground mt-1">{expiryDate || 'Sem vencimento próximo'}</p>
         </CardContent>

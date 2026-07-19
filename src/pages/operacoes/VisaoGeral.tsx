@@ -580,11 +580,11 @@ export default function VisaoGeral() {
                           </div>
                           <div>
                             <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Custo</p>
-                            <p className="font-mono tabular-nums text-sm mt-0.5">{op.total_cost ? formatCurrency(op.total_cost) : '—'}</p>
+                            <p className="font-mono tabular-nums text-sm mt-0.5">{op.total_cost ? formatCurrency(op.total_cost) : '-'}</p>
                           </div>
                           <div>
                             <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">R$/Mil</p>
-                            <p className="font-mono tabular-nums text-sm mt-0.5">{op.cost_per_thousand ? formatCurrency(op.cost_per_thousand) : '—'}</p>
+                            <p className="font-mono tabular-nums text-sm mt-0.5">{op.cost_per_thousand ? formatCurrency(op.cost_per_thousand) : '-'}</p>
                           </div>
                         </div>
                         {(op.bonus || op.holder_name) && (
@@ -652,13 +652,13 @@ export default function VisaoGeral() {
                             {formatNumber(op.quantity)}
                           </TableCell>
                           <TableCell className="py-2 text-xs text-right font-mono tabular-nums">
-                            {op.bonus ? formatNumber(op.bonus) : '—'}
+                            {op.bonus ? formatNumber(op.bonus) : '-'}
                           </TableCell>
                           <TableCell className="py-2 text-xs text-right font-mono tabular-nums">
-                            {op.total_cost ? formatCurrency(op.total_cost) : '—'}
+                            {op.total_cost ? formatCurrency(op.total_cost) : '-'}
                           </TableCell>
                           <TableCell className="py-2 text-xs text-right font-mono tabular-nums">
-                            {op.cost_per_thousand ? formatCurrency(op.cost_per_thousand) : '—'}
+                            {op.cost_per_thousand ? formatCurrency(op.cost_per_thousand) : '-'}
                           </TableCell>
                           <TableCell className="py-2">
                             <Badge variant={statusInfo.variant} className="text-xs px-1.5 py-0">

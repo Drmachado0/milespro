@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, PartyPopper } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { getUserLevel, getNextLevel, getLevelProgress } from '@/data/levels';
@@ -69,7 +69,7 @@ export const LevelProgressHeader = memo(function LevelProgressHeader({
                 <>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-foreground">
+                      <span className="text-sm font-medium text-foreground font-mono tabular-nums tracking-tight">
                         {totalPoints.toLocaleString('pt-BR')} pts
                       </span>
                       <ChevronRight className="w-4 h-4 text-muted-foreground" />
@@ -80,7 +80,7 @@ export const LevelProgressHeader = memo(function LevelProgressHeader({
                         </span>
                       </div>
                     </div>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground font-mono tabular-nums tracking-tight">
                       {progress.next.toLocaleString('pt-BR')} pts
                     </span>
                   </div>
@@ -97,8 +97,9 @@ export const LevelProgressHeader = memo(function LevelProgressHeader({
               ) : (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
-                    <p className="text-lg font-semibold text-foreground">
-                      🎉 Nível Máximo Alcançado!
+                    <p className="text-lg font-semibold text-foreground flex items-center justify-center gap-2">
+                      <PartyPopper className="w-5 h-5 text-primary" />
+                      Nível Máximo Alcançado!
                     </p>
                     <p className="text-sm text-muted-foreground">
                       Você é uma lenda do MilesPro!
