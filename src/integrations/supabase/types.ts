@@ -10,7 +10,32 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.5"
+  }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -635,26 +660,29 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          label: string | null
+          label: string
           managed_user_id: string
-          owner_id: string
+          owner_user_id: string
           revoked_at: string | null
+          updated_at: string
         }
         Insert: {
           created_at?: string
           id?: string
-          label?: string | null
+          label: string
           managed_user_id: string
-          owner_id: string
+          owner_user_id: string
           revoked_at?: string | null
+          updated_at?: string
         }
         Update: {
           created_at?: string
           id?: string
-          label?: string | null
+          label?: string
           managed_user_id?: string
-          owner_id?: string
+          owner_user_id?: string
           revoked_at?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -798,6 +826,74 @@ export type Database = {
           },
         ]
       }
+      plan_entitlements: {
+        Row: {
+          enabled: boolean
+          feature_key: string
+          id: number
+          limit_count: number | null
+          plan_type: string
+        }
+        Insert: {
+          enabled?: boolean
+          feature_key: string
+          id?: number
+          limit_count?: number | null
+          plan_type: string
+        }
+        Update: {
+          enabled?: boolean
+          feature_key?: string
+          id?: number
+          limit_count?: number | null
+          plan_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plan_entitlements_plan_type_fkey"
+            columns: ["plan_type"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["plan_type"]
+          },
+        ]
+      }
+      plans: {
+        Row: {
+          created_at: string
+          description: string | null
+          is_purchasable: boolean
+          monthly_price: number | null
+          name: string
+          plan_type: string
+          sort_order: number
+          updated_at: string
+          yearly_price: number | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          is_purchasable?: boolean
+          monthly_price?: number | null
+          name: string
+          plan_type: string
+          sort_order?: number
+          updated_at?: string
+          yearly_price?: number | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          is_purchasable?: boolean
+          monthly_price?: number | null
+          name?: string
+          plan_type?: string
+          sort_order?: number
+          updated_at?: string
+          yearly_price?: number | null
+        }
+        Relationships: []
+      }
       price_alerts: {
         Row: {
           created_at: string
@@ -850,6 +946,7 @@ export type Database = {
           id: string
           is_admin: boolean
           onboarding_progress: Json | null
+          product_tier: string
           quick_actions: string[] | null
           sidebar_items_order: Json | null
           sidebar_order: string[] | null
@@ -868,6 +965,7 @@ export type Database = {
           id: string
           is_admin?: boolean
           onboarding_progress?: Json | null
+          product_tier?: string
           quick_actions?: string[] | null
           sidebar_items_order?: Json | null
           sidebar_order?: string[] | null
@@ -886,6 +984,7 @@ export type Database = {
           id?: string
           is_admin?: boolean
           onboarding_progress?: Json | null
+          product_tier?: string
           quick_actions?: string[] | null
           sidebar_items_order?: Json | null
           sidebar_order?: string[] | null
@@ -1084,6 +1183,30 @@ export type Database = {
           source?: string | null
           title?: string
           type?: string
+        }
+        Relationships: []
+      }
+      push_alert_dedupe: {
+        Row: {
+          balance_id: string
+          event_type: string
+          sent_at: string
+          sent_on: string
+          user_id: string
+        }
+        Insert: {
+          balance_id: string
+          event_type: string
+          sent_at?: string
+          sent_on: string
+          user_id: string
+        }
+        Update: {
+          balance_id?: string
+          event_type?: string
+          sent_at?: string
+          sent_on?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -2642,14 +2765,19 @@ export type Database = {
     }
     Functions: {
       can_access_account: {
-        Args: { _target_user_id: string; _viewer_user_id: string }
+        Args: { _target_id: string; _viewer_id: string }
         Returns: boolean
       }
+      can_create_client: { Args: { _user_id: string }; Returns: boolean }
       can_create_operation: { Args: { _user_id: string }; Returns: boolean }
       count_monthly_operations: { Args: { _user_id: string }; Returns: number }
       get_user_plan: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["subscription_plan"]
+      }
+      has_entitlement: {
+        Args: { _feature: string; _user_id: string }
+        Returns: boolean
       }
       has_plan: {
         Args: {
@@ -2676,6 +2804,10 @@ export type Database = {
           _user_id: string
         }
         Returns: string
+      }
+      within_entitlement_limit: {
+        Args: { _current_count: number; _feature: string; _user_id: string }
+        Returns: boolean
       }
     }
     Enums: {
@@ -2824,6 +2956,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       alert_type: ["warning", "promo", "success", "info"],

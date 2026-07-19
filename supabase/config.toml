@@ -1,4 +1,4 @@
-project_id = "opusftqbbaozucmbuuug"
+project_id = "ermpialrzbnyfkatrxeq"
 
 [functions.fetch-promotions]
 verify_jwt = false

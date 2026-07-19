@@ -42,3 +42,6 @@ coverage/
 # Python cache
 __pycache__/
 *.py[cod]
+
+# Local secrets (never commit)
+.secrets/
