@@ -78,7 +78,7 @@ export const SavingsShowcase = () => {
             Quanto Você Pode Economizar?
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Exemplos de economia usando milhas em vez de pagar em dinheiro — valores aproximados de 2026
+            Exemplos de economia usando milhas em vez de pagar em dinheiro. Valores aproximados de 2026
           </p>
         </div>
 

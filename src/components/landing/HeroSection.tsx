@@ -1,5 +1,5 @@
 ﻿import { Button } from '@/components/ui/button';
-import { ArrowRight, Shield, Plane } from 'lucide-react';
+import { ArrowRight, Plane } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ProgramLogo } from '@/components/ui/program-logo';
 
@@ -44,7 +44,7 @@ export const HeroSection = () => {
             
             {/* Subheadline with value prop */}
             <p className="text-base md:text-lg text-muted-foreground mb-6 max-w-xl mx-auto lg:mx-0">
-              O MilesPro mostra quando emitir, transferir, vender ou comprar milhas — com saldo, custo médio, alertas e economia real em um só lugar.
+              O MilesPro mostra quando emitir, transferir, vender ou comprar milhas, com saldo, custo médio, alertas e economia real em um só lugar.
             </p>
             
             {/* CTAs */}
@@ -66,13 +66,6 @@ export const HeroSection = () => {
                 Ver Como Funciona
               </Button>
             </div>
-            
-            {/* Microcopy */}
-            <p className="text-sm text-muted-foreground flex items-center gap-2 justify-center lg:justify-start mb-6">
-              <Shield className="w-4 h-4 text-success" />
-              Sem cartão de crédito • Plano gratuito disponível • Upgrade quando fizer sentido
-            </p>
-            
           </div>
 
           {/* Right column - Simplified Economy Card */}

@@ -181,7 +181,7 @@ export const DashboardPreviewSection = () => {
         {/* Bottom text */}
         <FadeInSection delay={300}>
           <p className="text-muted-foreground text-sm md:text-base">
-            Dashboard completo com saldos, alertas, simulador e relatórios — <span className="font-medium text-foreground">tudo num só lugar</span>
+            Dashboard completo com saldos, alertas, simulador e relatórios, <span className="font-medium text-foreground">tudo num só lugar</span>
           </p>
         </FadeInSection>
       </div>
@@ -264,33 +264,36 @@ export const FeaturePreviewsSection = () => {
           </FadeInSection>
         </div>
 
-        {/* VIP Lounge Preview */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto items-center">
+        {/* VIP Lounge Spotlight - centered stack (breaks the repeating left/right split above) */}
+        <div className="max-w-3xl mx-auto text-center">
           <FadeInSection>
-            <OptimizedImage
-              src={vipLoungePreview}
-              alt="Controle de Sala VIP do MilesPro"
-              aspectRatio="4/3"
-              className="rounded-xl md:rounded-2xl shadow-lg md:shadow-xl w-full border border-border"
-            />
-          </FadeInSection>
-          <FadeInSection delay={150} className="text-left">
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-3 md:mb-4">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-3 md:mb-4 mx-auto">
               <Crown className="w-6 h-6 md:w-7 md:h-7 text-primary" />
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">3. Viaje Mais, Pague Menos</h3>
-            <p className="text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
-              Reserve passagens, hotéis, cruzeiros e passeios com economia real. 
-              Acompanhe cada viagem e veja quanto você economizou ao longo do tempo.
+            <p className="text-sm md:text-base text-muted-foreground mb-6 md:mb-8 max-w-xl mx-auto">
+              Reserve passagens, hotéis, cruzeiros e passeios com economia real. Acompanhe cada viagem e veja quanto você economizou ao longo do tempo.
             </p>
-            <ul className="space-y-3 text-muted-foreground">
+          </FadeInSection>
+          <FadeInSection delay={100}>
+            <div className="rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-xl border border-border mb-6 md:mb-8">
+              <OptimizedImage
+                src={vipLoungePreview}
+                alt="Controle de Sala VIP do MilesPro"
+                aspectRatio="16/9"
+                className="w-full"
+              />
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={150}>
+            <div className="grid sm:grid-cols-3 gap-4 text-left">
               {['Histórico de economia por viagem', 'Relatórios de valor economizado', 'Controle de Sala VIP incluso'].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-primary" />
-                  {item}
-                </li>
+                <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </FadeInSection>
         </div>
         
@@ -938,12 +941,12 @@ export const TestimonialsSection = ({ testimonials }: { testimonials: Testimonia
         
         {/* Intermediate CTA after testimonials */}
         <FadeInSection className="text-center mt-10">
-          <Button 
-            size="lg" 
-            onClick={() => navigate('/auth')} 
+          <Button
+            size="lg"
+            onClick={() => navigate('/auth')}
             className="gap-2 hover:scale-105 transition-transform"
           >
-            Criar Minha Conta Agora
+            Criar Conta Grátis
             <ArrowRight className="w-4 h-4" />
           </Button>
         </FadeInSection>
@@ -1030,12 +1033,12 @@ export const CTASection = () => {
           <p className="text-muted-foreground mb-6">
             Organize seus pontos, evite vencimentos e descubra quando vale a pena trocar milhas por passagens.
           </p>
-          <Button 
-            size="lg" 
-            onClick={() => navigate('/auth')} 
+          <Button
+            size="lg"
+            onClick={() => navigate('/auth')}
             className="gap-2 shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
           >
-            Começar a Economizar Agora
+            Criar Conta Grátis
             <ArrowRight className="w-4 h-4" />
           </Button>
           <p className="text-sm text-muted-foreground mt-4">
@@ -1273,7 +1276,7 @@ export const InlineSignupSection = () => {
             Pronto Para Economizar?
           </h2>
           <p className="text-muted-foreground mb-6">
-            Crie sua conta grátis — sem cartão de crédito
+            Crie sua conta grátis, sem cartão de crédito
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input 
@@ -1440,7 +1443,7 @@ export const CompetitorComparisonSection = () => {
             
             <div className="p-6 bg-muted/30 border-t border-border text-center">
               <Button onClick={() => navigate('/auth')} size="lg" className="hover:scale-[1.02] transition-transform">
-                Começar com MilesPro <ArrowRight className="w-4 h-4 ml-2" />
+                Criar Conta Grátis <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </Card>

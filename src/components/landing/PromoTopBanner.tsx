@@ -22,7 +22,7 @@ export const PromoTopBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-gradient-to-r from-primary to-primary text-white text-sm md:text-base px-4 py-2.5 flex items-center justify-center gap-2 relative">
+    <div className="bg-primary text-white text-sm md:text-base px-4 py-2.5 flex items-center justify-center gap-2 relative">
       {/* Close button */}
       <button
         onClick={handleClose}

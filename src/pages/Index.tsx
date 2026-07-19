@@ -171,7 +171,7 @@ const Index = () => {
       semiannualPrice: 'R$ 0',
       annualPrice: 'R$ 0',
       description: 'Ideal para quem está começando',
-      priceNote: 'Sem compromisso — comece hoje',
+      priceNote: 'Sem compromisso, comece hoje',
       features: [
         'Cadastro de 1 programa de pontos',
         'Visão unificada dos seus saldos',
@@ -180,7 +180,7 @@ const Index = () => {
         'Dashboard básico por programa',
         'Histórico de 30 dias',
       ],
-      cta: 'Começar Grátis Agora',
+      cta: 'Criar Conta Grátis',
       ctaNote: 'Sem cartão de crédito',
       popular: false,
     },
@@ -232,7 +232,7 @@ const Index = () => {
         'Relatórios com exportação em CSV/Excel',
         'Dashboards focados em lucro com milhas',
         'Suporte prioritário via WhatsApp',
-        'Gestão de milhas como negócio — não hobby',
+        'Gestão de milhas como negócio, não hobby',
       ],
       cta: 'Quero Ser VIP',
       popular: false,
@@ -269,7 +269,7 @@ const Index = () => {
     },
     {
       question: 'Vocês têm acesso às minhas milhas?',
-      answer: 'Não. O MilesPro é uma ferramenta de gestão. Você insere seus saldos e operações — nós não acessamos suas contas nos programas de fidelidade.',
+      answer: 'Não. O MilesPro é uma ferramenta de gestão. Você insere seus saldos e operações; nós não acessamos suas contas nos programas de fidelidade.',
     },
     {
       question: 'Preciso pagar para começar?',
@@ -281,12 +281,12 @@ const Index = () => {
     },
     {
       question: 'Vocês oferecem garantia?',
-      answer: 'Sim — 7 dias de garantia incondicional após a primeira cobrança. Não gostou nos primeiros 7 dias? Devolvemos integralmente, sem perguntas, sem burocracia. Veja os Termos de Uso para detalhes.',
+      answer: 'Sim. 7 dias de garantia incondicional após a primeira cobrança. Não gostou nos primeiros 7 dias? Devolvemos integralmente, sem perguntas, sem burocracia. Veja os Termos de Uso para detalhes.',
     },
     // Plan 02-06 D-12 / TIER-04..06 — multi-CPF VIP positioning.
     {
       question: 'Posso gerenciar milhas de várias pessoas (família ou clientes)?',
-      answer: 'Sim, no plano VIP. Você cria até 5 perfis adicionais por CPF (cada um com login próprio) e gerencia tudo no mesmo painel — saldos consolidados, simulador, alertas e relatórios separados por perfil. Ideal para famílias e quem trabalha com milhas como negócio. No plano Pro o gerenciamento é apenas do seu próprio CPF.',
+      answer: 'Sim, no plano VIP. Você cria até 5 perfis adicionais por CPF (cada um com login próprio) e gerencia tudo no mesmo painel: saldos consolidados, simulador, alertas e relatórios separados por perfil. Ideal para famílias e quem trabalha com milhas como negócio. No plano Pro o gerenciamento é apenas do seu próprio CPF.',
     },
     {
       question: 'Quais formas de pagamento são aceitas?',
@@ -413,7 +413,7 @@ const Index = () => {
                 Primeiro organize suas milhas. Depois decida se vale pagar.
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
-                A conta grátis serve para você enxergar saldo, custo médio e oportunidades. O Pro entra quando você quer alertas completos, histórico ilimitado, simuladores e decisão com números — não com achismo.
+                A conta grátis serve para você enxergar saldo, custo médio e oportunidades. O Pro entra quando você quer alertas completos, histórico ilimitado, simuladores e decisão com números, não com achismo.
               </p>
             </div>
             <div className="rounded-2xl border border-border bg-background/60 backdrop-blur-md p-6 shadow-2xl">
@@ -427,7 +427,7 @@ const Index = () => {
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary shrink-0" /> Upgrade manual e consciente</li>
               </ul>
               <Button size="lg" onClick={() => navigate('/auth')} className="w-full font-semibold shadow-lg shadow-primary/25">
-                Criar minha conta grátis
+                Criar Conta Grátis
               </Button>
             </div>
           </div>
