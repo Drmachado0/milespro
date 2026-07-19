@@ -686,6 +686,27 @@ export type Database = {
         }
         Relationships: []
       }
+      milhas_cotacao_diaria: {
+        Row: {
+          cotacao_milheiro: number
+          created_at: string
+          date: string
+          programa: string
+        }
+        Insert: {
+          cotacao_milheiro: number
+          created_at?: string
+          date: string
+          programa: string
+        }
+        Update: {
+          cotacao_milheiro?: number
+          created_at?: string
+          date?: string
+          programa?: string
+        }
+        Relationships: []
+      }
       operations: {
         Row: {
           bonus: number | null
@@ -2759,6 +2780,14 @@ export type Database = {
           program: string | null
           sell_price: number | null
           source: string | null
+        }
+        Relationships: []
+      }
+      latest_milhas_cotacao: {
+        Row: {
+          cotacao_milheiro: number | null
+          date: string | null
+          programa: string | null
         }
         Relationships: []
       }

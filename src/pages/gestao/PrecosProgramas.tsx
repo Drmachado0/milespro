@@ -51,6 +51,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useMarketPrices } from '@/hooks/useMarketPrices';
+import { CotacaoHistoricoChart } from '@/components/gestao/CotacaoHistoricoChart';
 import { useLocalization } from '@/hooks/useLocalization';
 import { getSafeErrorMessage } from '@/lib/errorSanitizer';
 import { 
@@ -759,6 +760,10 @@ export default function PrecosProgramas() {
                 <Sparkles className="h-4 w-4" />
                 Oportunidades
               </TabsTrigger>
+              <TabsTrigger value="evolucao" className="gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Evolução
+              </TabsTrigger>
             </TabsList>
             
             <div className="flex items-center gap-2">
@@ -1064,6 +1069,10 @@ export default function PrecosProgramas() {
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="evolucao">
+            <CotacaoHistoricoChart />
           </TabsContent>
         </Tabs>
       </div>
