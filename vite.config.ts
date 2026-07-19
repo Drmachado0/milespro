@@ -31,10 +31,12 @@ const REQUIRED_VITE_VARS: readonly string[] = [
   'VITE_SUPABASE_PROJECT_ID',
 ];
 
+// MilesPro's own Supabase project (sa-east-1), post-Lovable migration.
+// Publish-safe fallback used only when env vars are absent at build time.
 const MANAGED_SUPABASE_CONFIG = {
-  url: 'https://opusftqbbaozucmbuuug.supabase.co',
-  publishableKey: 'sb_publishable_yeLaYJqgwXam5YZVTbp0Kw_G8kLfPv8',
-  projectId: 'opusftqbbaozucmbuuug',
+  url: 'https://ermpialrzbnyfkatrxeq.supabase.co',
+  publishableKey: 'sb_publishable_hmPMM3OvurGYpcGjnBSqVA_uZ6vXFNe',
+  projectId: 'ermpialrzbnyfkatrxeq',
 } as const;
 
 const isLegacyJwtKey = (value?: string) => Boolean(value?.startsWith('eyJhbGciOi'));
