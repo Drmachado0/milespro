@@ -2,7 +2,17 @@
   "mcpServers": {
     "supabase": {
       "type": "http",
-      "url": "https://mcp.supabase.com/mcp?project_ref=opusftqbbaozucmbuuug&read_only=true"
+      "url": "https://mcp.supabase.com/mcp?project_ref=ermpialrzbnyfkatrxeq&read_only=true"
+    },
+    "code-review-graph": {
+      "command": "C:\\Users\\Juliano\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "args": [
+        "-m",
+        "code_review_graph",
+        "serve"
+      ],
+      "cwd": "C:\\Users\\Juliano\\miles-pro-hub-main",
+      "type": "stdio"
     }
   }
 }
