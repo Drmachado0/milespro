@@ -8,6 +8,7 @@ import { useLocalization } from '@/hooks/useLocalization';
 import { Database } from '@/integrations/supabase/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, ResponsiveContainer as TooltipResponsive } from 'recharts';
+import { cn } from '@/lib/utils';
 
 type OperationRow = Database['public']['Tables']['operations']['Row'];
 type OperationType = Database['public']['Enums']['operation_type'];
@@ -208,7 +209,7 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
         </div>
       )}
 
-      <div className="mt-4 grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4 sm:gap-6">
+      <div className="mt-4 grid grid-cols-2 gap-2 border-t border-border pt-4 sm:grid-cols-4 sm:gap-3">
         <KpiCell
           label="Saldo em milhas"
           value={totalMiles > 0 ? formatNumber(totalMiles) : '-'}
@@ -236,28 +237,35 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
   );
 });
 
-function KpiCell({
-  label,
-  value,
-  sub,
-  muted = false,
-  alert = false,
-}: {
+interface KpiCellProps {
   label: string;
   value: string;
   sub: React.ReactNode;
   muted?: boolean;
   alert?: boolean;
-}) {
+}
+
+function KpiCell({ label, value, sub, muted = false, alert = false }: KpiCellProps) {
   return (
-    <div className={alert ? 'bg-warning/10 rounded-lg px-2 py-1 -mx-2' : undefined}>
-      <div className="text-xs font-medium text-muted-foreground">
+    <div
+      className={cn(
+        'rounded-2xl border border-border/60 bg-card/50 px-3.5 py-2.5',
+        alert && 'border-warning/30 bg-warning/10',
+      )}
+    >
+      <div className="truncate text-[10px] font-medium text-muted-foreground">
         {label}
       </div>
-      <div className={`mt-1 font-mono text-lg font-semibold tabular-nums tracking-tight ${muted ? 'text-muted-foreground' : ''} ${alert ? 'text-warning dark:text-warning' : ''}`}>
+      <div
+        className={cn(
+          'mt-0.5 font-mono text-sm font-semibold tabular-nums tracking-tight sm:text-base',
+          muted && 'text-muted-foreground',
+          alert && 'text-warning dark:text-warning',
+        )}
+      >
         {value}
       </div>
-      {sub && <div className="mt-0.5 text-[11px] text-muted-foreground">{sub}</div>}
+      {sub && <div className="mt-0.5 truncate text-[10px] text-muted-foreground">{sub}</div>}
     </div>
   );
 }

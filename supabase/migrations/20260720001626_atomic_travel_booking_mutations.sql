@@ -2,6 +2,41 @@
 -- the loyalty-program ledger. Both functions run as the authenticated caller,
 -- so existing RLS remains authoritative.
 
+-- Shared lookups used by create/update/cancel_travel_booking below.
+CREATE OR REPLACE FUNCTION public._travel_booking_table(p_booking_type text)
+RETURNS text
+LANGUAGE sql
+IMMUTABLE
+SET search_path = ''
+AS $$
+  SELECT CASE p_booking_type
+    WHEN 'ticket' THEN 'travel_tickets'
+    WHEN 'hotel' THEN 'travel_hotel_reservations'
+    WHEN 'car' THEN 'travel_car_rentals'
+    WHEN 'cruise' THEN 'travel_cruises'
+    ELSE NULL
+  END;
+$$;
+
+CREATE OR REPLACE FUNCTION public._travel_booking_note_subject(p_booking_type text)
+RETURNS text
+LANGUAGE sql
+IMMUTABLE
+SET search_path = ''
+AS $$
+  SELECT CASE p_booking_type
+    WHEN 'ticket' THEN 'passagem'
+    WHEN 'hotel' THEN 'reserva de hotel'
+    WHEN 'car' THEN 'aluguel de carro'
+    WHEN 'cruise' THEN 'cruzeiro'
+  END;
+$$;
+
+REVOKE ALL ON FUNCTION public._travel_booking_table(text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public._travel_booking_note_subject(text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public._travel_booking_table(text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public._travel_booking_note_subject(text) TO authenticated;
+
 CREATE OR REPLACE FUNCTION public.create_travel_booking(
   p_booking_type text,
   p_booking jsonb
@@ -23,19 +58,8 @@ BEGIN
     RAISE EXCEPTION 'authentication required' USING ERRCODE = '42501';
   END IF;
 
-  v_table_name := CASE p_booking_type
-    WHEN 'ticket' THEN 'travel_tickets'
-    WHEN 'hotel' THEN 'travel_hotel_reservations'
-    WHEN 'car' THEN 'travel_car_rentals'
-    WHEN 'cruise' THEN 'travel_cruises'
-    ELSE NULL
-  END;
-  v_note_subject := CASE p_booking_type
-    WHEN 'ticket' THEN 'passagem'
-    WHEN 'hotel' THEN 'reserva de hotel'
-    WHEN 'car' THEN 'aluguel de carro'
-    WHEN 'cruise' THEN 'cruzeiro'
-  END;
+  v_table_name := public._travel_booking_table(p_booking_type);
+  v_note_subject := public._travel_booking_note_subject(p_booking_type);
 
   IF v_table_name IS NULL THEN
     RAISE EXCEPTION 'unsupported booking type' USING ERRCODE = '22023';
@@ -153,20 +177,8 @@ BEGIN
     RAISE EXCEPTION 'authentication required' USING ERRCODE = '42501';
   END IF;
 
-  v_table_name := CASE p_booking_type
-    WHEN 'ticket' THEN 'travel_tickets'
-    WHEN 'hotel' THEN 'travel_hotel_reservations'
-    WHEN 'car' THEN 'travel_car_rentals'
-    WHEN 'cruise' THEN 'travel_cruises'
-    ELSE NULL
-  END;
-
-  v_note_subject := CASE p_booking_type
-    WHEN 'ticket' THEN 'passagem'
-    WHEN 'hotel' THEN 'reserva de hotel'
-    WHEN 'car' THEN 'aluguel de carro'
-    WHEN 'cruise' THEN 'cruzeiro'
-  END;
+  v_table_name := public._travel_booking_table(p_booking_type);
+  v_note_subject := public._travel_booking_note_subject(p_booking_type);
 
   IF v_table_name IS NULL THEN
     RAISE EXCEPTION 'unsupported booking type' USING ERRCODE = '22023';
@@ -313,19 +325,8 @@ BEGIN
     RAISE EXCEPTION 'authentication required' USING ERRCODE = '42501';
   END IF;
 
-  v_table_name := CASE p_booking_type
-    WHEN 'ticket' THEN 'travel_tickets'
-    WHEN 'hotel' THEN 'travel_hotel_reservations'
-    WHEN 'car' THEN 'travel_car_rentals'
-    WHEN 'cruise' THEN 'travel_cruises'
-    ELSE NULL
-  END;
-  v_note_subject := CASE p_booking_type
-    WHEN 'ticket' THEN 'passagem'
-    WHEN 'hotel' THEN 'reserva de hotel'
-    WHEN 'car' THEN 'aluguel de carro'
-    WHEN 'cruise' THEN 'cruzeiro'
-  END;
+  v_table_name := public._travel_booking_table(p_booking_type);
+  v_note_subject := public._travel_booking_note_subject(p_booking_type);
 
   IF v_table_name IS NULL THEN
     RAISE EXCEPTION 'unsupported booking type' USING ERRCODE = '22023';

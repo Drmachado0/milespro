@@ -1,12 +1,15 @@
-﻿import { memo, useMemo } from 'react';
+﻿import { memo, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Plus } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Plus } from 'lucide-react';
 import { useProgramBalances } from '@/hooks/useProgramBalances';
 import { useMarketPrices } from '@/hooks/useMarketPrices';
+import { useExpirationAlerts } from '@/hooks/useExpirationAlerts';
 import { useLocalization } from '@/hooks/useLocalization';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+
+const COLLAPSE_STORAGE_KEY = 'dashboard-opportunities-collapsed';
 
 type OppKind = 'sell' | 'buy' | 'expiring';
 
@@ -35,11 +38,44 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
   const { formatCurrency, formatNumber } = useLocalization();
   const { balances, isLoading: balancesLoading } = useProgramBalances();
   const { prices, isLoading: pricesLoading } = useMarketPrices();
+  const { expiringPrograms, isLoading: expiringLoading } = useExpirationAlerts();
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(COLLAPSE_STORAGE_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
 
-  const isLoading = balancesLoading || pricesLoading;
+  const isLoading = balancesLoading || pricesLoading || expiringLoading;
+
+  const toggleCollapsed = () => {
+    setIsCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(COLLAPSE_STORAGE_KEY, next ? '1' : '0');
+      } catch {
+        // Storage unavailable (private mode, quota) — collapse still works, just doesn't persist.
+      }
+      return next;
+    });
+  };
 
   const opportunities = useMemo<Opportunity[]>(() => {
     const out: Opportunity[] = [];
+
+    // Priority alerts: expiring miles always outrank market signals.
+    for (const exp of expiringPrograms.slice(0, 2)) {
+      out.push({
+        id: `expiring-${exp.program}`,
+        kind: 'expiring',
+        program: exp.program,
+        title: `${formatNumber(exp.expiringMiles)} milhas vencem em ${exp.daysUntilExpiry}d`,
+        descMain: exp.daysUntilExpiry <= 7 ? 'Vencimento crítico' : 'Vencimento próximo',
+        priority: 1_000_000 - exp.daysUntilExpiry,
+        cta: { label: 'Ver alertas', path: '/alertas' },
+      });
+    }
 
     for (const balance of balances) {
       const market = prices?.find((p) => p.program === balance.program);
@@ -91,7 +127,7 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
     }
 
     return out.sort((a, b) => b.priority - a.priority).slice(0, 4);
-  }, [balances, prices, formatCurrency, formatNumber]);
+  }, [balances, prices, expiringPrograms, formatCurrency, formatNumber]);
 
   if (isLoading) {
     return (
@@ -137,23 +173,38 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
     <div className="flex flex-col gap-2.5">
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold">Oportunidades</div>
-        <span className="text-xs text-muted-foreground">
-          {opportunities.length} sina{opportunities.length === 1 ? 'l' : 'is'}
-        </span>
+        <div className="flex items-center gap-1">
+          <span className="text-xs text-muted-foreground">
+            {opportunities.length} sina{opportunities.length === 1 ? 'l' : 'is'}
+          </span>
+          <button
+            type="button"
+            onClick={toggleCollapsed}
+            className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            aria-label={isCollapsed ? 'Expandir oportunidades' : 'Recolher oportunidades'}
+            aria-expanded={!isCollapsed}
+          >
+            <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', isCollapsed && '-rotate-90')} />
+          </button>
+        </div>
       </div>
 
-      <OpportunityCard opp={featured} featured onCtaClick={(p) => navigate(p)} index={0} />
-      {secondary.map((o, i) => (
-        <OpportunityCard key={o.id} opp={o} onCtaClick={(p) => navigate(p)} index={i + 1} />
-      ))}
+      {!isCollapsed && (
+        <>
+          <OpportunityCard opp={featured} featured onCtaClick={(p) => navigate(p)} index={0} />
+          {secondary.map((o, i) => (
+            <OpportunityCard key={o.id} opp={o} onCtaClick={(p) => navigate(p)} index={i + 1} />
+          ))}
 
-      <button
-        type="button"
-        onClick={() => navigate('/alertas')}
-        className="mt-1 text-center text-xs text-muted-foreground hover:text-foreground"
-      >
-        Ver todos os sinais →
-      </button>
+          <button
+            type="button"
+            onClick={() => navigate('/alertas')}
+            className="mt-1 text-center text-xs text-muted-foreground hover:text-foreground"
+          >
+            Ver todos os sinais →
+          </button>
+        </>
+      )}
     </div>
   );
 });
