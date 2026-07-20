@@ -26,19 +26,22 @@ import { vi, beforeEach } from 'vitest';
  *   });
  */
 
-let _value = false;
+const state = vi.hoisted(() => ({ value: false }));
+
+vi.mock('@/hooks/useIsIOSCapacitor', () => ({
+  useIsIOSCapacitor: () => state.value,
+  isIOSCapacitor: () => state.value,
+}));
+
+beforeEach(() => {
+  state.value = false;
+});
 
 export function mockIsIOSCapacitor(): void {
-  vi.mock('@/hooks/useIsIOSCapacitor', () => ({
-    useIsIOSCapacitor: () => _value,
-    isIOSCapacitor: () => _value,
-  }));
-
-  beforeEach(() => {
-    _value = false;
-  });
+  // Kept as a compatibility no-op for existing tests. The mock must be
+  // declared at module scope so Vitest can hoist it deterministically.
 }
 
 export function setIsIOSCapacitor(value: boolean): void {
-  _value = value;
+  state.value = value;
 }

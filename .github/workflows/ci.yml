@@ -37,6 +37,12 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Unit tests
+        run: npm test
+
+      - name: Unit test coverage
+        run: npm run test:coverage
+
       - name: Build
         run: npm run build
         env:
@@ -216,7 +222,7 @@ jobs:
           exit 1
 
       - name: Run adversarial integration tests
-        run: npm test -- --project=integration --run
+        run: npm run test:integration
 
       - name: Stop Supabase
         if: always()
