@@ -219,8 +219,8 @@ export default {
         "shimmer": "shimmer 2s ease-in-out infinite",
       },
       fontFamily: {
-        sans: ['DM Sans', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Inter', 'DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Outfit', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         serif: ['Libre Caslon Text', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
       },

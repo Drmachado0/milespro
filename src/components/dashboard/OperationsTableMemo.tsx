@@ -80,7 +80,7 @@ const OperationCard = memo(function OperationCard({
   formatDateShort: (date: string) => string;
 }) {
   return (
-    <div className="p-3 sm:p-4 border-b border-border/50 last:border-b-0 hover:bg-muted/30 transition-colors active:bg-muted/50">
+    <article className="border-b border-white/[0.06] p-4 transition-colors last:border-b-0 hover:bg-white/[0.025]">
       {/* Header: Date, Type, Status */}
       <div className="flex items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2 flex-wrap">
@@ -136,7 +136,7 @@ const OperationCard = memo(function OperationCard({
           </p>
         </div>
       </div>
-    </div>
+    </article>
   );
 });
 
@@ -159,8 +159,8 @@ const OperationRow = memo(function OperationRow({
   return (
     <TableRow 
       className={cn(
-        'cursor-pointer transition-colors duration-200',
-        'hover:bg-muted/50',
+        'transition-colors duration-200',
+        'hover:bg-white/[0.025]',
         index % 2 === 0 ? 'bg-transparent' : 'bg-muted/20'
       )}
       style={style}
@@ -437,12 +437,12 @@ function OperationsTableBase({
   const handleNextPage = () => setCurrentPage((p) => Math.min(totalPages - 1, p + 1));
 
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="pb-2 sm:pb-3 border-b bg-muted/30 p-3 sm:p-6">
+    <Card className="overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat">
+      <CardHeader className="border-b border-white/[0.06] p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <CardTitle className="text-sm sm:text-base lg:text-lg flex items-center gap-2">
-            <div className="p-1 sm:p-1.5 rounded-lg bg-primary/10">
-              <History className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+          <CardTitle className="flex items-center gap-3 text-base sm:text-lg">
+            <div className="grid h-10 w-10 place-items-center rounded-xl border border-primary/20 bg-primary/10">
+              <History className="h-4 w-4 text-primary" />
             </div>
             <span className="truncate">{title}</span>
             {operations.length > 0 && (
@@ -481,7 +481,7 @@ function OperationsTableBase({
         </div>
         {/* Summary stats bar */}
         {operations.length > 0 && (
-          <div className="mt-2 sm:mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground border-t border-border/50 pt-2 sm:pt-3">
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.06] pt-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
               <History className="h-3 w-3" />
               <span className="font-mono font-medium tabular-nums text-foreground">{operations.length}</span> operações

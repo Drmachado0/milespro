@@ -127,9 +127,7 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
   const isPositive = deltaBrl >= 0;
   const sparkColor = isPositive ? '#22c55e' : '#ef4444'; // emerald-500 or rose-500
   const sparkGradient = isPositive ? 'rgba(34, 197, 94, 0.35)' : 'rgba(239, 68, 68, 0.35)';
-  const gradientStyle = isPositive
-    ? 'radial-gradient(1200px 300px at -10% -50%, rgba(34, 197, 94, 0.12), transparent 60%), radial-gradient(800px 300px at 110% 150%, rgba(34, 197, 94, 0.08), transparent 60%)'
-    : 'radial-gradient(1200px 300px at -10% -50%, rgba(239, 68, 68, 0.12), transparent 60%), radial-gradient(800px 300px at 110% 150%, rgba(251, 146, 60, 0.08), transparent 60%)';
+  const gradientStyle = 'radial-gradient(900px 320px at -5% -30%, rgba(255, 106, 26, 0.16), transparent 58%), radial-gradient(700px 260px at 105% 120%, rgba(255, 255, 255, 0.04), transparent 62%)';
   const trendIcon = isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />;
   const trendColorClass = isPositive ? 'text-success' : 'text-destructive';
 
@@ -141,17 +139,17 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-7"
+      className="relative min-h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(var(--mp-surface-2))] p-6 shadow-floating sm:p-8"
       style={{
         backgroundImage: gradientStyle,
       }}
     >
-      <div className="flex items-center gap-2.5 text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
+      <div className="flex items-center gap-2.5 text-sm font-medium text-muted-foreground">
         <span className={`h-1.5 w-1.5 rounded-full ${trendColorClass.replace('text-', 'bg-')}`} />
         {title ?? 'Valor Patrimonial'}
       </div>
 
-      <div className="mt-1.5 font-display text-[44px] leading-none font-bold tracking-tight sm:text-[56px] tabular-nums">
+      <div className="mt-1.5 break-words font-display text-[clamp(2rem,11vw,3.5rem)] leading-none font-bold tracking-tight tabular-nums">
         {intPart}
         {centsPart && <span className="text-muted-foreground font-normal text-[28px] sm:text-[36px]">{centsPart}</span>}
       </div>
@@ -171,7 +169,11 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
       </div>
 
       {hasMovement && (
-        <div className="mt-4 h-20">
+        <div
+          className="mt-4 h-20"
+          role="img"
+          aria-label={`Evolução do valor patrimonial nos últimos 30 dias: ${isPositive ? 'alta' : 'queda'} de ${formatCurrency(Math.abs(deltaBrl))}, equivalente a ${Math.abs(deltaPct).toFixed(1)} por cento`}
+        >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={series} margin={{ top: 4, right: 0, left: 0, bottom: 4 }}>
               <defs>
@@ -249,7 +251,7 @@ function KpiCell({
 }) {
   return (
     <div className={alert ? 'bg-warning/10 rounded-lg px-2 py-1 -mx-2' : undefined}>
-      <div className="text-[11px] font-medium uppercase tracking-[0.06em] text-muted-foreground/80">
+      <div className="text-xs font-medium text-muted-foreground">
         {label}
       </div>
       <div className={`mt-1 font-mono text-lg font-semibold tabular-nums tracking-tight ${muted ? 'text-muted-foreground' : ''} ${alert ? 'text-warning dark:text-warning' : ''}`}>

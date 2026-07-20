@@ -1,6 +1,6 @@
 ﻿import { memo, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Plus, Star } from 'lucide-react';
+import { ArrowUpRight, Plus } from 'lucide-react';
 import { useProgramBalances } from '@/hooks/useProgramBalances';
 import { useMarketPrices } from '@/hooks/useMarketPrices';
 import { useLocalization } from '@/hooks/useLocalization';
@@ -137,8 +137,8 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
     <div className="flex flex-col gap-2.5">
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold">Oportunidades</div>
-        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
-          {opportunities.length} ativ{opportunities.length === 1 ? 'a' : 'as'}
+        <span className="text-xs text-muted-foreground">
+          {opportunities.length} sina{opportunities.length === 1 ? 'l' : 'is'}
         </span>
       </div>
 
@@ -171,24 +171,20 @@ function OpportunityCard({
 }) {
   const kindLabel =
     opp.kind === 'sell'
-      ? 'OPORTUNIDADE DE VENDA'
+      ? 'Venda favorável'
       : opp.kind === 'buy'
-        ? 'DICA DE COMPRA'
-        : 'VENCIMENTO PRÓXIMO';
-  const kindColor =
-    opp.kind === 'sell'
-      ? 'text-success'
-      : opp.kind === 'buy'
-        ? 'text-info'
-        : 'text-warning';
+        ? 'Compra em observação'
+        : 'Vencimento próximo';
 
   return (
-    <div
+    <button
+      type="button"
       className={cn(
-        'group relative flex cursor-pointer flex-col gap-1.5 rounded-xl border p-4 transition-all duration-300 animate-fade-in',
+        'group relative flex w-full flex-col gap-1.5 rounded-xl border p-4 text-left transition-[border-color,background-color,transform] duration-300 animate-fade-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2',
+        opp.cta ? 'cursor-pointer active:scale-[0.99]' : 'cursor-default',
         featured
-          ? 'border-primary/40 bg-card hover:bg-card/80 shadow-md shadow-primary/5'
-          : 'border-border bg-card hover:bg-muted/40',
+          ? 'border-primary/25 bg-primary/[0.055] hover:border-primary/40'
+          : 'border-white/[0.07] bg-white/[0.025] hover:border-white/[0.12] hover:bg-white/[0.04]',
       )}
       style={{
         animationDelay: `${index * 75}ms`,
@@ -198,14 +194,11 @@ function OpportunityCard({
           } : {}),
       }}
       onClick={() => opp.cta && onCtaClick(opp.cta.path)}
+      aria-label={opp.cta ? `${opp.title}. ${opp.cta.label}` : opp.title}
+      disabled={!opp.cta}
     >
-      {featured && (
-        <div className="absolute -top-2 -left-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-warning to-primary text-[10px] font-bold text-white shadow-sm animate-pulse">
-          <Star className="h-2.5 w-2.5 fill-current" /> Destaque
-        </div>
-      )}
-      <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.06em]">
-        <span className={kindColor}>{kindLabel}</span>
+      <div className="flex items-center justify-between text-xs font-medium">
+        <span className={featured ? 'text-primary' : 'text-muted-foreground'}>{kindLabel}</span>
         <span className="text-muted-foreground/70">{opp.program}</span>
       </div>
       <div className="text-sm font-semibold leading-snug text-foreground">
@@ -215,7 +208,7 @@ function OpportunityCard({
         {opp.descMain}
         {opp.descSub ? <span className="ml-1 opacity-75">{opp.descSub}</span> : null}
         {opp.roiPct !== undefined && opp.kind === 'sell' && (
-          <span className="ml-2 px-1.5 py-0.5 rounded bg-success/15 text-success dark:text-success text-[10px] font-semibold">
+          <span className="ml-2 text-[11px] font-semibold text-success">
             +{opp.roiPct.toFixed(1)}% ROI
           </span>
         )}
@@ -226,6 +219,6 @@ function OpportunityCard({
           <ArrowUpRight className="h-3.5 w-3.5" />
         </div>
       )}
-    </div>
+    </button>
   );
 }
