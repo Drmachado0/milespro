@@ -69,7 +69,7 @@ function SavingsHighlightCardComponent() {
   const totalAbsSavings = categoryItems.reduce((sum, cat) => sum + Math.abs(cat.value), 0);
 
   return (
-    <Card className="relative overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat">
+    <Card className="relative overflow-hidden border-white/[0.07] bg-card shadow-flat">
       <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
       <CardContent className="relative p-5 sm:p-7">
         {/* Header */}

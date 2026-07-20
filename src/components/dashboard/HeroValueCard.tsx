@@ -139,7 +139,7 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
 
   return (
     <div
-      className="relative min-h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(var(--mp-surface-2))] p-6 shadow-floating sm:p-8"
+      className="relative min-h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-card p-6 shadow-floating sm:p-8"
       style={{
         backgroundImage: gradientStyle,
       }}
@@ -149,7 +149,7 @@ export const HeroValueCard = memo(function HeroValueCard({ title }: HeroValueCar
         {title ?? 'Valor Patrimonial'}
       </div>
 
-      <div className="mt-1.5 break-words font-display text-[clamp(2rem,11vw,3.5rem)] leading-none font-bold tracking-tight tabular-nums">
+      <div className="mt-1.5 break-words font-mono text-[clamp(2rem,11vw,3.5rem)] leading-none font-bold tracking-tight tabular-nums">
         {intPart}
         {centsPart && <span className="text-muted-foreground font-normal text-[28px] sm:text-[36px]">{centsPart}</span>}
       </div>

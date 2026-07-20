@@ -1,8 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 
-import { mockIsIOSCapacitor, setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
-
-mockIsIOSCapacitor();
+import { setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
 
 /**
  * Index Path C smoke test.

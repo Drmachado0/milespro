@@ -39,7 +39,7 @@ export function ExpirationAlertsCard() {
 
   if (isLoading) {
     return (
-      <Card className="h-full overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat">
+      <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-warning/10">
@@ -60,7 +60,7 @@ export function ExpirationAlertsCard() {
 
   if (expiringPrograms.length === 0) {
     return (
-      <Card className="h-full overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat">
+      <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-success/10">
@@ -85,7 +85,7 @@ export function ExpirationAlertsCard() {
   }
 
   return (
-    <Card className="h-full overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat">
+    <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base flex items-center gap-2">

@@ -4,12 +4,12 @@ import { vi, beforeEach } from 'vitest';
  * Test helper for toggling the canonical iOS Path C runtime gate.
  *
  * Use in any *.test.tsx that needs to render a component in both branches
- * (iOS = pricing UI hidden, non-iOS = pricing UI rendered).
+ * (iOS = pricing UI hidden, non-iOS = pricing UI rendered). Importing this
+ * module registers the mock (via vi.mock, hoisted to module scope) as a
+ * side effect — no separate setup call is needed.
  *
  * Usage:
- *   import { mockIsIOSCapacitor, setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
- *
- *   mockIsIOSCapacitor();  // call once at top of file
+ *   import { setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
  *
  *   describe('Component', () => {
  *     it('hides pricing on iOS', () => {
@@ -36,11 +36,6 @@ vi.mock('@/hooks/useIsIOSCapacitor', () => ({
 beforeEach(() => {
   state.value = false;
 });
-
-export function mockIsIOSCapacitor(): void {
-  // Kept as a compatibility no-op for existing tests. The mock must be
-  // declared at module scope so Vitest can hoist it deterministically.
-}
 
 export function setIsIOSCapacitor(value: boolean): void {
   state.value = value;

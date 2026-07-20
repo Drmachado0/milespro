@@ -39,7 +39,7 @@ export function IRReportBanner() {
   return (
     <Card
       className={cn(
-        "relative overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat",
+        "relative overflow-hidden border-white/[0.07] bg-card shadow-flat",
         "animate-fade-in"
       )}
     >

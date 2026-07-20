@@ -437,7 +437,7 @@ function OperationsTableBase({
   const handleNextPage = () => setCurrentPage((p) => Math.min(totalPages - 1, p + 1));
 
   return (
-    <Card className="overflow-hidden border-white/[0.07] bg-[hsl(var(--mp-surface-2))] shadow-flat">
+    <Card className="overflow-hidden border-white/[0.07] bg-card shadow-flat">
       <CardHeader className="border-b border-white/[0.06] p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <CardTitle className="flex items-center gap-3 text-base sm:text-lg">

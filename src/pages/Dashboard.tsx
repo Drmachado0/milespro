@@ -1,5 +1,4 @@
-﻿import { useCallback, useMemo, useState } from 'react';
-import { useRef } from 'react';
+﻿import { useCallback, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, TrendingUp, Send, ArrowRightLeft, RefreshCw, Plus, ChevronRight } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -275,7 +274,12 @@ function MiniAction({ label, sub, icon, onClick }: MiniActionProps) {
   );
 }
 
-function SectionHeading({ title, description }: { title: string; description: string }) {
+interface SectionHeadingProps {
+  title: string;
+  description: string;
+}
+
+function SectionHeading({ title, description }: SectionHeadingProps) {
   return (
     <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
       <h2 className="text-xl font-semibold tracking-[-0.025em] sm:text-2xl">{title}</h2>

@@ -1,4 +1,4 @@
-export type SupabaseRuntimeCachingRule = {
+export interface SupabaseRuntimeCachingRule {
   urlPattern: RegExp;
   handler: 'NetworkOnly' | 'CacheFirst';
   options?: {
@@ -11,7 +11,7 @@ export type SupabaseRuntimeCachingRule = {
       statuses: number[];
     };
   };
-};
+}
 
 const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
