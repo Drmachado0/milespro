@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render } from '@testing-library/react';
 
-import { mockIsIOSCapacitor, setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
-
-mockIsIOSCapacitor();
+import { setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
 
 // Mock the Crisp SDK so we can spy on configure() without loading the real CDN.
 // vi.hoisted() lets us reference crispMock inside the hoisted vi.mock() factory.

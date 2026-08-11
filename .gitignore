@@ -55,3 +55,15 @@ ruvector.db
 *.db-wal
 # Added by code-review-graph
 .code-review-graph/
+
+# Codex local configuration
+.codex/
+
+# Claude Flow runtime data
+.claude-flow/data/
+.claude-flow/logs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local

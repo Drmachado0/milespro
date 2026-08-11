@@ -1,12 +1,15 @@
-﻿import { memo, useMemo } from 'react';
+﻿import { memo, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Plus, Star } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Plus } from 'lucide-react';
 import { useProgramBalances } from '@/hooks/useProgramBalances';
 import { useMarketPrices } from '@/hooks/useMarketPrices';
+import { useExpirationAlerts } from '@/hooks/useExpirationAlerts';
 import { useLocalization } from '@/hooks/useLocalization';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+
+const COLLAPSE_STORAGE_KEY = 'dashboard-opportunities-collapsed';
 
 type OppKind = 'sell' | 'buy' | 'expiring';
 
@@ -35,11 +38,44 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
   const { formatCurrency, formatNumber } = useLocalization();
   const { balances, isLoading: balancesLoading } = useProgramBalances();
   const { prices, isLoading: pricesLoading } = useMarketPrices();
+  const { expiringPrograms, isLoading: expiringLoading } = useExpirationAlerts();
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(COLLAPSE_STORAGE_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
 
-  const isLoading = balancesLoading || pricesLoading;
+  const isLoading = balancesLoading || pricesLoading || expiringLoading;
+
+  const toggleCollapsed = () => {
+    setIsCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(COLLAPSE_STORAGE_KEY, next ? '1' : '0');
+      } catch {
+        // Storage unavailable (private mode, quota) — collapse still works, just doesn't persist.
+      }
+      return next;
+    });
+  };
 
   const opportunities = useMemo<Opportunity[]>(() => {
     const out: Opportunity[] = [];
+
+    // Priority alerts: expiring miles always outrank market signals.
+    for (const exp of expiringPrograms.slice(0, 2)) {
+      out.push({
+        id: `expiring-${exp.program}`,
+        kind: 'expiring',
+        program: exp.program,
+        title: `${formatNumber(exp.expiringMiles)} milhas vencem em ${exp.daysUntilExpiry}d`,
+        descMain: exp.daysUntilExpiry <= 7 ? 'Vencimento crítico' : 'Vencimento próximo',
+        priority: 1_000_000 - exp.daysUntilExpiry,
+        cta: { label: 'Ver alertas', path: '/alertas' },
+      });
+    }
 
     for (const balance of balances) {
       const market = prices?.find((p) => p.program === balance.program);
@@ -91,7 +127,7 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
     }
 
     return out.sort((a, b) => b.priority - a.priority).slice(0, 4);
-  }, [balances, prices, formatCurrency, formatNumber]);
+  }, [balances, prices, expiringPrograms, formatCurrency, formatNumber]);
 
   if (isLoading) {
     return (
@@ -137,23 +173,38 @@ export const OpportunitiesSide = memo(function OpportunitiesSide() {
     <div className="flex flex-col gap-2.5">
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold">Oportunidades</div>
-        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
-          {opportunities.length} ativ{opportunities.length === 1 ? 'a' : 'as'}
-        </span>
+        <div className="flex items-center gap-1">
+          <span className="text-xs text-muted-foreground">
+            {opportunities.length} sina{opportunities.length === 1 ? 'l' : 'is'}
+          </span>
+          <button
+            type="button"
+            onClick={toggleCollapsed}
+            className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            aria-label={isCollapsed ? 'Expandir oportunidades' : 'Recolher oportunidades'}
+            aria-expanded={!isCollapsed}
+          >
+            <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', isCollapsed && '-rotate-90')} />
+          </button>
+        </div>
       </div>
 
-      <OpportunityCard opp={featured} featured onCtaClick={(p) => navigate(p)} index={0} />
-      {secondary.map((o, i) => (
-        <OpportunityCard key={o.id} opp={o} onCtaClick={(p) => navigate(p)} index={i + 1} />
-      ))}
+      {!isCollapsed && (
+        <>
+          <OpportunityCard opp={featured} featured onCtaClick={(p) => navigate(p)} index={0} />
+          {secondary.map((o, i) => (
+            <OpportunityCard key={o.id} opp={o} onCtaClick={(p) => navigate(p)} index={i + 1} />
+          ))}
 
-      <button
-        type="button"
-        onClick={() => navigate('/alertas')}
-        className="mt-1 text-center text-xs text-muted-foreground hover:text-foreground"
-      >
-        Ver todos os sinais →
-      </button>
+          <button
+            type="button"
+            onClick={() => navigate('/alertas')}
+            className="mt-1 text-center text-xs text-muted-foreground hover:text-foreground"
+          >
+            Ver todos os sinais →
+          </button>
+        </>
+      )}
     </div>
   );
 });
@@ -171,24 +222,20 @@ function OpportunityCard({
 }) {
   const kindLabel =
     opp.kind === 'sell'
-      ? 'OPORTUNIDADE DE VENDA'
+      ? 'Venda favorável'
       : opp.kind === 'buy'
-        ? 'DICA DE COMPRA'
-        : 'VENCIMENTO PRÓXIMO';
-  const kindColor =
-    opp.kind === 'sell'
-      ? 'text-success'
-      : opp.kind === 'buy'
-        ? 'text-info'
-        : 'text-warning';
+        ? 'Compra em observação'
+        : 'Vencimento próximo';
 
   return (
-    <div
+    <button
+      type="button"
       className={cn(
-        'group relative flex cursor-pointer flex-col gap-1.5 rounded-xl border p-4 transition-all duration-300 animate-fade-in',
+        'group relative flex w-full flex-col gap-1.5 rounded-xl border p-4 text-left transition-[border-color,background-color,transform] duration-300 animate-fade-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2',
+        opp.cta ? 'cursor-pointer active:scale-[0.99]' : 'cursor-default',
         featured
-          ? 'border-primary/40 bg-card hover:bg-card/80 shadow-md shadow-primary/5'
-          : 'border-border bg-card hover:bg-muted/40',
+          ? 'border-primary/25 bg-primary/[0.055] hover:border-primary/40'
+          : 'border-white/[0.07] bg-white/[0.025] hover:border-white/[0.12] hover:bg-white/[0.04]',
       )}
       style={{
         animationDelay: `${index * 75}ms`,
@@ -198,14 +245,11 @@ function OpportunityCard({
           } : {}),
       }}
       onClick={() => opp.cta && onCtaClick(opp.cta.path)}
+      aria-label={opp.cta ? `${opp.title}. ${opp.cta.label}` : opp.title}
+      disabled={!opp.cta}
     >
-      {featured && (
-        <div className="absolute -top-2 -left-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-warning to-primary text-[10px] font-bold text-white shadow-sm animate-pulse">
-          <Star className="h-2.5 w-2.5 fill-current" /> Destaque
-        </div>
-      )}
-      <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.06em]">
-        <span className={kindColor}>{kindLabel}</span>
+      <div className="flex items-center justify-between text-xs font-medium">
+        <span className={featured ? 'text-primary' : 'text-muted-foreground'}>{kindLabel}</span>
         <span className="text-muted-foreground/70">{opp.program}</span>
       </div>
       <div className="text-sm font-semibold leading-snug text-foreground">
@@ -215,7 +259,7 @@ function OpportunityCard({
         {opp.descMain}
         {opp.descSub ? <span className="ml-1 opacity-75">{opp.descSub}</span> : null}
         {opp.roiPct !== undefined && opp.kind === 'sell' && (
-          <span className="ml-2 px-1.5 py-0.5 rounded bg-success/15 text-success dark:text-success text-[10px] font-semibold">
+          <span className="ml-2 text-[11px] font-semibold text-success">
             +{opp.roiPct.toFixed(1)}% ROI
           </span>
         )}
@@ -226,6 +270,6 @@ function OpportunityCard({
           <ArrowUpRight className="h-3.5 w-3.5" />
         </div>
       )}
-    </div>
+    </button>
   );
 }

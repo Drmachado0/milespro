@@ -75,7 +75,7 @@ export const ProgramsTable = memo(function ProgramsTable() {
 
   if (isLoading) {
     return (
-      <div className="rounded-2xl border border-border bg-card p-1">
+      <div className="rounded-2xl border border-white/[0.07] bg-card p-1 shadow-flat">
         <Skeleton className="h-10 rounded-xl" />
         <div className="divide-y divide-border/50">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -98,11 +98,17 @@ export const ProgramsTable = memo(function ProgramsTable() {
           {activeCount} {activeCount === 1 ? 'programa ativo' : 'programas ativos'}
         </span>
       </div>
-      <div className="inline-flex gap-1 self-start rounded-lg border border-border bg-card p-[3px] sm:self-auto">
+      <div
+        className="inline-flex gap-1 self-start rounded-lg border border-border bg-card p-[3px] sm:self-auto"
+        role="tablist"
+        aria-label="Filtrar saldos por categoria"
+      >
         {tabs.map((t) => (
           <button
             key={t.key}
             type="button"
+            role="tab"
+            aria-selected={activeCat === t.key}
             onClick={() => setActiveCat(t.key)}
             className={cn(
               'inline-flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium transition-colors',
@@ -153,7 +159,7 @@ export const ProgramsTable = memo(function ProgramsTable() {
           ))}
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.07] bg-card shadow-flat">
           <div className="grid grid-cols-[minmax(220px,1.4fr)_minmax(160px,1.3fr)_120px_130px_110px_32px] items-center gap-4 border-b border-border bg-muted/30 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.06em] text-muted-foreground">
             <div>Programa</div>
             <div>Alocação</div>
@@ -197,7 +203,7 @@ function DesktopRow({
       type="button"
       onClick={onClick}
       className={cn(
-        'grid w-full grid-cols-[minmax(220px,1.4fr)_minmax(160px,1.3fr)_120px_130px_110px_32px] items-center gap-4 px-4 py-3.5 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none',
+        'grid w-full grid-cols-[minmax(220px,1.4fr)_minmax(160px,1.3fr)_120px_130px_110px_32px] items-center gap-4 px-4 py-3.5 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
         !isLast && 'border-b border-border/50',
       )}
     >
@@ -211,7 +217,14 @@ function DesktopRow({
         </div>
       </div>
       <div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+        <div
+          className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+          role="progressbar"
+          aria-label={`Alocação de ${row.program} no portfólio`}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(row.allocation * 10) / 10}
+        >
           <div
             className="h-full rounded-full bg-gradient-to-r from-primary to-warning"
             style={{ width: `${Math.max(row.allocation, 1)}%` }}
@@ -254,7 +267,7 @@ function MobileRow({
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3 text-left transition-colors hover:bg-muted/40 active:scale-[0.99]"
+      className="flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3 text-left transition-colors hover:bg-muted/40 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       <ProgramLogo program={row.program} size="sm" />
       <div className="min-w-0 flex-1">
@@ -264,7 +277,14 @@ function MobileRow({
             {formatNumber(row.balance)}
           </span>
         </div>
-        <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-muted">
+        <div
+          className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-muted"
+          role="progressbar"
+          aria-label={`Alocação de ${row.program} no portfólio`}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(row.allocation * 10) / 10}
+        >
           <div
             className="h-full rounded-full bg-gradient-to-r from-primary to-warning"
             style={{ width: `${Math.max(row.allocation, 1)}%` }}

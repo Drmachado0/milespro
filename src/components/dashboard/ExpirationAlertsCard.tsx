@@ -39,7 +39,7 @@ export function ExpirationAlertsCard() {
 
   if (isLoading) {
     return (
-      <Card className="overflow-hidden">
+      <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-warning/10">
@@ -60,7 +60,7 @@ export function ExpirationAlertsCard() {
 
   if (expiringPrograms.length === 0) {
     return (
-      <Card className="overflow-hidden">
+      <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-success/10">
@@ -85,7 +85,7 @@ export function ExpirationAlertsCard() {
   }
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base flex items-center gap-2">
@@ -99,10 +99,10 @@ export function ExpirationAlertsCard() {
             size="sm"
             onClick={requestPermission}
             className={cn(
-              'h-8 px-2 rounded-lg',
+              'h-11 min-w-11 px-2 rounded-lg',
               isEnabled ? 'hover:bg-primary/10' : 'hover:bg-muted'
             )}
-            title={isEnabled ? 'Notificações ativadas' : 'Ativar notificações'}
+            aria-label={isEnabled ? 'Notificações de vencimento ativadas' : 'Ativar notificações de vencimento'}
           >
             {isEnabled ? (
               <Bell className="h-4 w-4 text-primary" />
