@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { NavItem, NavGroup } from '@/config/sidebarNavigation';
+import { MaterialNavIcon } from '@/components/icons/MaterialNavIcon';
 
 interface SidebarFixedGroupProps {
   group: NavGroup;
@@ -49,10 +50,7 @@ export function SidebarFixedGroup({
           isMobile ? "mb-1.5 px-3 py-2" : "mb-2 px-3 py-1.5",
           isGroupActive && "bg-primary/10"
         )}>
-          <group.titleIcon className={cn(
-            "transition-colors duration-200 w-5 h-5",
-            isGroupActive ? "text-primary" : "text-muted-foreground"
-          )} />
+          <MaterialNavIcon groupKey={group.titleKey} active={isGroupActive} compact />
           <span className={cn(
             "font-semibold tracking-wide transition-colors duration-200 text-sm",
             isGroupActive ? "text-primary" : "text-foreground"
@@ -70,7 +68,6 @@ export function SidebarFixedGroup({
           const showBonusBadge = isBonusPendentes && overdueCount > 0;
           const showBadge = showAlertBadge || showBonusBadge;
           const badgeCount = isAlertas ? alertCount : overdueCount;
-          const ItemIcon = item.icon;
           const active = isItemActive(item);
           const itemLabel = t(item.labelKey);
           
@@ -101,10 +98,7 @@ export function SidebarFixedGroup({
                 )} />
                 
                 <div className="relative">
-                  <ItemIcon className={cn(
-                    "flex-shrink-0 transition-colors duration-200 w-5 h-5",
-                    active && "text-primary"
-                  )} />
+                  <MaterialNavIcon route={item.to} active={active} />
                   {showBadge && collapsed && (
                     <span className="absolute -top-1 -right-1 h-2 w-2 bg-destructive rounded-full animate-pulse" />
                   )}

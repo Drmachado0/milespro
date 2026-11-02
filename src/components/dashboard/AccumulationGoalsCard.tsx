@@ -64,7 +64,7 @@ export function AccumulationGoalsCard() {
 
   if (isLoading) {
     return (
-      <Card className="overflow-hidden">
+      <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-info/10">
@@ -85,7 +85,7 @@ export function AccumulationGoalsCard() {
 
   return (
     <>
-      <Card className="overflow-hidden">
+      <Card className="h-full overflow-hidden border-white/[0.07] bg-card shadow-flat">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="text-base flex items-center gap-2">
@@ -189,9 +189,9 @@ export function AccumulationGoalsCard() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-7 w-7 p-0 text-success hover:text-success hover:bg-success/10"
+                            className="h-11 w-11 p-0 text-success hover:text-success hover:bg-success/10"
                             onClick={() => markAsCompleted.mutate(goal.id)}
-                            title="Marcar como concluída"
+                            aria-label={`Marcar meta de ${goal.program} como concluída`}
                           >
                             <Trophy className="w-3.5 h-3.5" />
                           </Button>
@@ -199,8 +199,9 @@ export function AccumulationGoalsCard() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-7 w-7 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          className="h-11 w-11 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                           onClick={() => setDeleteId(goal.id)}
+                          aria-label={`Excluir meta de ${goal.program}`}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </Button>
@@ -219,7 +220,14 @@ export function AccumulationGoalsCard() {
                           {goal.progress.toFixed(0)}%
                         </span>
                       </div>
-                      <div className="relative h-2 rounded-full bg-muted/50 overflow-hidden">
+                      <div
+                        className="relative h-2 rounded-full bg-muted/50 overflow-hidden"
+                        role="progressbar"
+                        aria-label={`Progresso da meta de ${goal.program}`}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.min(Math.round(goal.progress), 100)}
+                      >
                         <div
                           className={cn(
                             'absolute inset-y-0 left-0 rounded-full transition-all duration-500',

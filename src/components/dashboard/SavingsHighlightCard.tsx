@@ -2,7 +2,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { PiggyBank, Plane, Building2, Car, Ship, ShieldCheck, Landmark, Bus, ArrowRight, TrendingUp } from 'lucide-react';
+import { PiggyBank, Plane, Building2, Car, Ship, ShieldCheck, Landmark, Bus, ArrowRight } from 'lucide-react';
 import { useTotalSavings } from '@/hooks/travel/useTotalSavings';
 import { useLocalization } from '@/hooks/useLocalization';
 import { useNavigate } from 'react-router-dom';
@@ -69,40 +69,36 @@ function SavingsHighlightCardComponent() {
   const totalAbsSavings = categoryItems.reduce((sum, cat) => sum + Math.abs(cat.value), 0);
 
   return (
-    <Card className={cn(
-      "border overflow-hidden ring-1",
-      isPositive 
-        ? "bg-gradient-to-br from-success/8 via-success/4 to-background border-success/20 ring-success/10" 
-        : "bg-gradient-to-br from-destructive/8 via-destructive/4 to-background border-destructive/20 ring-destructive/10"
-    )}>
-      <CardContent className="pt-6">
+    <Card className="relative overflow-hidden border-white/[0.07] bg-card shadow-flat">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+      <CardContent className="relative p-5 sm:p-7">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-4">
+        <div className="mb-7 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div className="flex items-start gap-4">
             <div className={cn(
-              "p-3 rounded-2xl",
+              "grid h-11 w-11 shrink-0 place-items-center rounded-xl border",
               isPositive ? "bg-success/8" : "bg-destructive/8"
             )}>
               <PiggyBank className={cn(
-                "h-8 w-8",
+                "h-5 w-5",
                 isPositive ? "text-success" : "text-destructive"
               )} />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground font-medium">Total Economizado</p>
+              <p className="text-sm font-medium text-muted-foreground">Economia consolidada</p>
               <p className={cn(
-                "font-mono text-3xl sm:text-4xl font-bold tabular-nums tracking-tight",
+                "mt-1 break-words font-display text-[clamp(2rem,5vw,3.4rem)] font-semibold leading-none tabular-nums tracking-[-0.04em]",
                 isPositive ? "text-success" : "text-destructive"
               )}>
                 {formatCurrency(totalSavings)}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="mt-2 text-sm text-muted-foreground">
                 em {reservationsCount} {reservationsCount === 1 ? 'reserva' : 'reservas'}
               </p>
             </div>
           </div>
           <Button 
-            variant="outline" 
+            variant="outline"
             onClick={() => navigate('/relatorios/economia')}
             className="gap-2 shrink-0"
           >
@@ -111,8 +107,7 @@ function SavingsHighlightCardComponent() {
           </Button>
         </div>
 
-        {/* Category Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
           {categoryItems.map((cat, index) => {
             const Icon = cat.icon;
             const isItemPositive = cat.value >= 0;
@@ -123,39 +118,20 @@ function SavingsHighlightCardComponent() {
             return (
               <div
                 key={cat.key}
-                className={cn(
-                  "p-3 rounded-xl bg-card/80 backdrop-blur-sm border transition-all hover:scale-[1.02] hover:shadow-md cursor-default animate-fade-in",
-                  isItemPositive ? "border-success/20" : "border-destructive/20"
-                )}
+                className="animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={cn(
-                    "p-1.5 rounded-lg",
-                    isItemPositive ? "bg-success/8" : "bg-destructive/8"
-                  )}>
-                    <Icon className={cn(
-                      "h-4 w-4",
-                      isItemPositive ? "text-success" : "text-destructive"
-                    )} />
-                  </div>
-                  <span className="text-xs text-muted-foreground font-medium truncate">{cat.label}</span>
+                <div className="flex items-center gap-3">
+                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <span className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">{cat.label}</span>
+                  <span className={cn("font-mono text-sm font-semibold tabular-nums", isItemPositive ? "text-success" : "text-destructive")}>{formatCurrency(cat.value)}</span>
                 </div>
-                <p className={cn(
-                  "text-sm font-bold",
-                  isItemPositive ? "text-success" : "text-destructive"
-                )}>
-                  {formatCurrency(cat.value)}
-                </p>
-                {cat.value !== 0 && (
-                  <div className="flex items-center gap-1 mt-1">
-                    <TrendingUp className={cn(
-                      "h-3 w-3",
-                      isItemPositive ? "text-success" : "text-destructive rotate-180"
-                    )} />
-                    <span className="text-xs text-muted-foreground">{percentage}%</span>
+                <div className="mt-2 flex items-center gap-3">
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]" role="progressbar" aria-label={`Participação de ${cat.label}`} aria-valuenow={Number(percentage)} aria-valuemin={0} aria-valuemax={100}>
+                    <div className={cn("h-full rounded-full", isItemPositive ? "bg-success" : "bg-destructive")} style={{ width: `${Math.max(Number(percentage), cat.value === 0 ? 0 : 2)}%` }} />
                   </div>
-                )}
+                  <span className="w-9 text-right font-mono text-xs tabular-nums text-muted-foreground">{percentage}%</span>
+                </div>
               </div>
             );
           })}

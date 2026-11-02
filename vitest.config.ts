@@ -40,6 +40,14 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
+      // Thresholds track actual coverage (~63/46/62/52%), not the 80% target —
+      // ratchet these up as coverage improves rather than dropping the gate.
+      thresholds: {
+        lines: 60,
+        functions: 45,
+        branches: 50,
+        statements: 60,
+      },
       exclude: [
         'src/main.tsx',
         'src/**/*.d.ts',

@@ -5,6 +5,7 @@ import { Reorder, useDragControls } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { NavItem, NavGroup, isItemLocked } from '@/config/sidebarNavigation';
 import { SidebarNavItem } from './SidebarNavItem';
+import { MaterialNavIcon } from '@/components/icons/MaterialNavIcon';
 
 interface SidebarNavGroupProps {
   group: NavGroup;
@@ -80,10 +81,7 @@ export function SidebarNavGroup({
               <GripVertical className="w-4 h-4 text-muted-foreground" />
             </div>
           )}
-          <group.titleIcon className={cn(
-            "transition-colors duration-200 w-5 h-5",
-            isGroupActive ? "text-primary" : "text-muted-foreground"
-          )} />
+          <MaterialNavIcon groupKey={group.titleKey} active={isGroupActive} compact />
           <span className={cn(
             "font-semibold tracking-wide transition-colors duration-200 flex-1 text-sm",
             isGroupActive ? "text-primary" : "text-foreground"

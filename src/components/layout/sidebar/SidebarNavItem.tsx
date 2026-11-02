@@ -7,6 +7,7 @@ import { GripVertical, Lock } from 'lucide-react';
 import { Reorder, useDragControls } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { NavItem } from '@/config/sidebarNavigation';
+import { MaterialNavIcon } from '@/components/icons/MaterialNavIcon';
 
 interface SidebarNavItemProps {
   item: NavItem;
@@ -41,7 +42,6 @@ export function SidebarNavItem({
 }: SidebarNavItemProps) {
   const dragControls = useDragControls();
   const navigate = useNavigate();
-  const ItemIcon = item.icon;
 
   const handleLockedClick = (e: MouseEvent) => {
     e.preventDefault();
@@ -85,9 +85,7 @@ export function SidebarNavItem({
             'hover:bg-accent/30'
           )}
         >
-          <div className="relative">
-            <ItemIcon className="flex-shrink-0 transition-colors duration-200 w-5 h-5 text-muted-foreground" />
-          </div>
+          <MaterialNavIcon route={item.to} className="grayscale-[0.35]" />
           {!collapsed && (
             <div className="flex items-center gap-2 flex-1">
               <span className="flex-1 transition-colors duration-200">{itemLabel}</span>
@@ -118,10 +116,7 @@ export function SidebarNavItem({
           )} />
           
           <div className="relative">
-            <ItemIcon className={cn(
-              "flex-shrink-0 transition-colors duration-200 w-5 h-5",
-              active && "text-primary"
-            )} />
+            <MaterialNavIcon route={item.to} active={active} />
             {showBadge && collapsed && (
               <span className="absolute -top-1 -right-1 h-2 w-2 bg-destructive rounded-full animate-pulse" />
             )}

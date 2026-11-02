@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
+import { createSupabaseRuntimeCaching } from "./src/config/pwaRuntimeCaching";
 
 // SEC-03 / SEC-04: failOnSecretLeak() guards the production bundle.
 // - FORBIDDEN_VITE_PATTERNS: any matching VITE_* env var would be inlined into
@@ -189,58 +190,7 @@ export default defineConfig(({ mode }) => {
         skipWaiting: true,
         clientsClaim: true,
         runtimeCaching: [
-          // API calls - Network first with fallback to cache
-          {
-            urlPattern: /^https:\/\/opusftqbbaozucmbuuug\.supabase\.co\/rest\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              networkTimeoutSeconds: 10,
-              expiration: {
-                maxEntries: 200,
-                maxAgeSeconds: 60 * 60 * 24, // 24 hours
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          // Auth endpoints - Network only (no caching for security)
-          {
-            urlPattern: /^https:\/\/opusftqbbaozucmbuuug\.supabase\.co\/auth\/.*/i,
-            handler: 'NetworkOnly',
-          },
-          // Edge functions - Network first with short cache
-          {
-            urlPattern: /^https:\/\/opusftqbbaozucmbuuug\.supabase\.co\/functions\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'functions-cache',
-              networkTimeoutSeconds: 15,
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60, // 1 hour
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          // Storage/images from Supabase - Cache first
-          {
-            urlPattern: /^https:\/\/opusftqbbaozucmbuuug\.supabase\.co\/storage\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'storage-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
+          ...createSupabaseRuntimeCaching(supabaseUrl),
           // Local images - Cache first with long expiry
           {
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/i,

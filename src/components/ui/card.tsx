@@ -9,7 +9,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * MilesPro v2 Card
  * - Surface 2 background, dual-layer raised shadow
- * - Subtle border, lifts -2px on hover
+ * - Subtle border; interactive cards lift on hover and press on activation
  */
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, interactive = false, ...props }, ref) => (
@@ -17,9 +17,11 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       ref={ref}
       className={cn(
         "rounded-xl border border-[hsl(var(--border))] bg-card text-card-foreground shadow-raised",
-        "transition-[transform,box-shadow,border-color] duration-200",
-        "hover:-translate-y-0.5 hover:border-[hsl(228_13%_22%)] hover:shadow-floating",
-        interactive && "touch-manipulation cursor-pointer active:scale-[0.99]",
+        interactive && [
+          "touch-manipulation cursor-pointer transition-[transform,box-shadow,border-color] duration-200",
+          "hover:-translate-y-0.5 hover:border-[hsl(var(--border-strong))] hover:shadow-floating",
+          "active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none",
+        ],
         className,
       )}
       {...props}

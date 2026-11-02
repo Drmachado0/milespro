@@ -4,10 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
-import { mockIsIOSCapacitor, setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
-
-// MUST come before the import of Assinatura
-mockIsIOSCapacitor();
+import { setIsIOSCapacitor } from '@/test/helpers/iosCapacitorMock';
 
 // Stub auth + supabase + telemetry to avoid network in tests.
 vi.mock('@/hooks/useAuth', () => ({
