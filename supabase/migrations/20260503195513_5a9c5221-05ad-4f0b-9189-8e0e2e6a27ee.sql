@@ -31,9 +31,14 @@ USING (false);
 -- once Realtime is enabled. Idempotent via DROP POLICY IF EXISTS.
 DO $$
 BEGIN
+  -- Also require ownership: on local/CI stacks realtime.messages is owned by
+  -- supabase_admin, and ALTER TABLE would fail with 42501 (must be owner).
   IF EXISTS (
-    SELECT 1 FROM information_schema.tables
-    WHERE table_schema = 'realtime' AND table_name = 'messages'
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'realtime' AND c.relname = 'messages'
+      AND pg_has_role(current_user, c.relowner, 'USAGE')
   ) THEN
     EXECUTE 'ALTER TABLE realtime.messages ENABLE ROW LEVEL SECURITY';
     EXECUTE 'DROP POLICY IF EXISTS "Users can subscribe to their own channel" ON realtime.messages';
@@ -49,6 +54,6 @@ BEGIN
       WITH CHECK (realtime.topic() = ('user:' || auth.uid()::text))
     $pol$;
   ELSE
-    RAISE NOTICE 'realtime.messages not present on this project — skipping realtime authorization RLS';
+    RAISE NOTICE 'realtime.messages absent or not owned by current role — skipping realtime authorization RLS';
   END IF;
 END $$;
